@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.vn_crypto">
    <application
-        android:label="vn_crypto"
+        android:label="VNCrypto"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

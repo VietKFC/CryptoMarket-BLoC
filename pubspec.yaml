@@ -38,6 +38,12 @@ dependencies:
   flutter_bloc: ^8.0.0
   equatable: ^2.0.3
   interactive_chart: ^0.3.4
+  dio: ^4.0.4
+  get_it: ^7.2.0
+  flutter_dotenv: ^5.0.0
+  sqflite: ^2.0.1
+  flutter_launcher_name: ^0.0.1
+  flutter_launcher_icons: ^0.8.1
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +58,15 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/images/logo.png"
+
+flutter_launcher_name:
+  name: "VNCrypto"
 
 # The following section is specific to Flutter.
 flutter:

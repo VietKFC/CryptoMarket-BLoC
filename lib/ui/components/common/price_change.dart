@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:vn_crypto/ultils/Constraint.dart';
+import 'package:vn_crypto/ultils/Constant.dart';
 
 class PriceChange extends StatelessWidget {
   final double priceChangeRate;

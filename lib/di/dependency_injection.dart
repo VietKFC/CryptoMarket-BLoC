@@ -5,7 +5,7 @@ import 'package:vn_crypto/data/service/api.dart';
 
 final getIt = GetIt.instance;
 
-configureInjection() {
+configureInjection() async {
   getIt.registerSingleton<Dio>(Dio());
   getIt.registerLazySingleton<Api>(() => Api(dio: getIt<Dio>()));
 

@@ -3,11 +3,16 @@ class AppStrings {
   static const String converter = "Converter";
   static const String following = "Following";
   static const String errorLoadDataFailed = "Fail to get data";
+  static const String topCoins = "Top coins";
+  static const String trending = "Trending";
 
   static const String titleListTopCoin = "List Top Coin";
   static const String textMarketCap = "MCap \$";
   static const String textEmptyList = "Empty List.";
   static const String textCurrency = "usd";
+  static const String rankCoin = "Rank #";
+  static const String rankTrendingCoin = "#";
+  static const String scoreCoin = "Score: ";
 }
 
 class ImageAssetString {

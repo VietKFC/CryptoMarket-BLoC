@@ -1,4 +1,5 @@
 import 'package:vn_crypto/data/model/item_coin.dart';
+import 'package:vn_crypto/data/model/item_trending_coin.dart';
 import 'package:vn_crypto/data/service/api.dart';
 
 class ListCoinRepository {
@@ -7,4 +8,6 @@ class ListCoinRepository {
   ListCoinRepository({required this.api});
 
   Future<List<ItemCoin>> getCoins(String currency) => api.getCoins(currency);
+
+  Future<List<ItemTrendingCoin>> getTrendingCoins() => api.getTrendingCoins();
 }

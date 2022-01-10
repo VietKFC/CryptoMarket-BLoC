@@ -7,7 +7,7 @@ import 'package:vn_crypto/data/model/item_coin.dart';
 import 'package:vn_crypto/data/repository/coins_repository.dart';
 import 'package:vn_crypto/di/dependency_injection.dart';
 import 'package:vn_crypto/ui/components/items/ListCoinItem.dart';
-import 'package:vn_crypto/ultils/Constraint.dart';
+import 'package:vn_crypto/ultils/Constant.dart';
 
 class ListCoinScreen extends StatelessWidget {
   const ListCoinScreen({Key? key}) : super(key: key);

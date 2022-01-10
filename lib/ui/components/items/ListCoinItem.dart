@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:vn_crypto/data/model/item_coin.dart';
 import 'package:vn_crypto/ui/components/common/price_change.dart';
-import 'package:vn_crypto/ultils/Constraint.dart';
+import 'package:vn_crypto/ultils/Constant.dart';
 
 class ListCoinItem extends StatelessWidget {
   final ItemCoin coin;

@@ -11,34 +11,37 @@ class ListCoinItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.network(coin.image, width: 35, height: 35),
-              const SizedBox(width: 6),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  titleWithFollow(title: coin.name),
-                  const SizedBox(height: 4),
-                  rankAndPriceVolatility(rank: '${coin.rank}')
-                ],
-              ),
-              Expanded(
-                  child: priceAndMarketCap(
-                      price: '${coin.curerentPrice}',
-                      mCap: '${coin.marketCap}'))
-            ],
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.network(coin.image, width: 35, height: 35),
+                const SizedBox(width: 6),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    titleWithFollow(title: coin.name),
+                    const SizedBox(height: 4),
+                    rankAndPriceVolatility(rank: '${coin.rank}')
+                  ],
+                ),
+                Expanded(
+                    child: priceAndMarketCap(
+                        price: '${coin.curerentPrice}',
+                        mCap: '${coin.marketCap}'))
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -100,7 +103,7 @@ class ListCoinItem extends StatelessWidget {
             baseline: 16,
             baselineType: TextBaseline.alphabetic,
             child: Text(
-              '${AppStrings.textMarketCap}$mCap',
+              '${AppStrings.textMCap}$mCap',
               style: const TextStyle(
                 fontSize: 12,
               ),

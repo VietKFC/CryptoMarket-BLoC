@@ -8,7 +8,7 @@ class AppStrings {
   static const String categories = "Categories";
 
   static const String titleListTopCoin = "List Top Coin";
-  static const String textMarketCap = "MCap \$";
+  static const String textMCap = "MCap \$";
   static const String textEmptyList = "Empty List.";
   static const String textCurrency = "usd";
   static const String rankCoin = "Rank #";
@@ -20,6 +20,11 @@ class AppStrings {
   static const String ethMarketCap = "Eth Market Cap: ";
   static const String tradingVolume = "Trading Volume(24h): ";
   static const String topCoin = "Top coin: ";
+  static const String textMarketCap = "MarketCap";
+  static const String textStatic = "Static";
+  static const String textURL = "URL";
+  static const String textCurrentAndATH = "Current/ATH";
+  static const String textAth = "ATH";
 }
 
 class ImageAssetString {
@@ -38,4 +43,9 @@ class AppColors {
   static const int colorMercury = 0xFFE8E8E8;
   static const int colorAmaranth = 0xFFEA3943;
   static const int colorMountainMeadow = 0xFF17C784;
+  static const int colorSliver = 0xFFBCB9B9;
+}
+
+class Constant {
+  static const int defaultDays = 365;
 }

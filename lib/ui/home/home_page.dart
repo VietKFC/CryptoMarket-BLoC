@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => HomeBloc(
-          listCoinRepository: getIt.get<ListCoinRepository>(),
+          listCoinRepository: getIt.get<CoinRepository>(),
           categoryRepository: getIt.get<CategoryRepository>())
         ..add(HomeLoaded()),
       child: Scaffold(

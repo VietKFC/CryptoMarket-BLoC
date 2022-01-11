@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:vn_crypto/data/model/category.dart';
 import 'package:vn_crypto/data/model/coin_response.dart';
+import 'package:vn_crypto/data/model/global.dart';
 import 'package:vn_crypto/data/model/item_coin.dart';
 import 'package:vn_crypto/data/model/item_coin_response.dart';
 import 'package:vn_crypto/data/model/item_trending_coin.dart';
@@ -34,5 +36,21 @@ class Api {
       trendingCoins.add(itemCoinResponse.coin);
     }
     return trendingCoins;
+  }
+
+  Future<List<Category>> getCategories() async {
+    final response = await dio.get(Url.GET_CATEGORIES);
+    List<Category> categories = [];
+    List<dynamic> categoryResponses = response.data as List;
+    for (int i = 0; i < categoryResponses.length; i++) {
+      categories.add(Category.fromJson(categoryResponses[i]));
+    }
+    return categories;
+  }
+
+  Future<Global> getGlobalInfo() async {
+    final response = await dio.get(Url.GET_GLOBAL_INFO);
+    Global global = Global.fromJson(response.data['data']);
+    return global;
   }
 }

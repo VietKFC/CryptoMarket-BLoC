@@ -5,6 +5,7 @@ class AppStrings {
   static const String errorLoadDataFailed = "Fail to get data";
   static const String topCoins = "Top coins";
   static const String trending = "Trending";
+  static const String categories = "Categories";
 
   static const String titleListTopCoin = "List Top Coin";
   static const String textMarketCap = "MCap \$";
@@ -13,6 +14,12 @@ class AppStrings {
   static const String rankCoin = "Rank #";
   static const String rankTrendingCoin = "#";
   static const String scoreCoin = "Score: ";
+  static const String textMarketCapFull = "Market cap: \$";
+  static const String textVolume24h = "Volume(24h): \$";
+  static const String defiMarketCap = "Defi Market Cap: ";
+  static const String ethMarketCap = "Eth Market Cap: ";
+  static const String tradingVolume = "Trading Volume(24h): ";
+  static const String topCoin = "Top coin: ";
 }
 
 class ImageAssetString {
@@ -24,6 +31,7 @@ class ImageAssetString {
   static const String icUnFollowing = 'assets/images/ic_un_follow.svg';
   static const String icPriceUp = 'assets/images/ic_price_up.svg';
   static const String icPriceDown = 'assets/images/ic_price_down.svg';
+  static const String icChange = 'assets/images/ic_change.svg';
 }
 
 class AppColors {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vn_crypto/di/dependency_injection.dart';
 import 'package:vn_crypto/ui/components/BottomNav.dart';
+import 'package:vn_crypto/ui/home/home_page.dart';
 import 'package:vn_crypto/ui/screen/ListCoinScreen.dart';
 
 void main() async {
@@ -39,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
         body: IndexedStack(
           index: _selectedIndex,
           children: const [
-            Center(child: Text('Home')),
+            HomePage(),
             ListCoinScreen(),
             Center(child: Text('Invest')),
             Center(child: Text('Settings'))

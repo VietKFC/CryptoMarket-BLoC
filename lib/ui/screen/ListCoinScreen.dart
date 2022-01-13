@@ -9,6 +9,7 @@ import 'package:vn_crypto/di/dependency_injection.dart';
 import 'package:vn_crypto/ui/components/common/CoinSearchBar.dart';
 import 'package:vn_crypto/ui/components/items/ListCoinItem.dart';
 import 'package:vn_crypto/ultils/Constant.dart';
+import 'package:vn_crypto/ui/screen/CoinDetailsScreen.dart';
 
 class ListCoinScreen extends StatelessWidget {
   const ListCoinScreen({Key? key}) : super(key: key);
@@ -16,8 +17,8 @@ class ListCoinScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var listCoinBloc =
-        ListCoinBloc(listCoinRepository: getIt.get<ListCoinRepository>())
-          ..add(ListCoinLoaded());
+    ListCoinBloc(listCoinRepository: getIt.get<CoinRepository>())
+      ..add(ListCoinLoaded());
     return BlocProvider(
         create: (_) => listCoinBloc,
         child: RefreshIndicator(
@@ -45,7 +46,8 @@ class ListCoinScreen extends StatelessWidget {
                           color: Colors.black,
                         )
                       ]),
-                  body: buildBody(state: state));
+                  body: buildBody(state: state)
+              );
             },
           ),
         ));
@@ -64,10 +66,16 @@ class ListCoinScreen extends StatelessWidget {
   Widget listCoin({required List<ItemCoin> list}) {
     return ListView.separated(
       itemBuilder: (context, index) {
-        return ListCoinItem(coin: list[index]);
+        return GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                  CoinDetailsScreen(coinId: list[index].id)));
+            },
+            child: ListCoinItem(coin: list[index]));
       },
       itemCount: list.length,
-      separatorBuilder: (_, context) => const Divider(
+      separatorBuilder: (_, context) =>
+      const Divider(
         height: 1,
       ),
     );

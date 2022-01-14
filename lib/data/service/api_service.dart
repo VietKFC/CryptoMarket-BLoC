@@ -79,4 +79,20 @@ class Api {
     }
     return candleDatas;
   }
+
+  Future<List<String>> getSupportedCurrencies() async {
+    final response = await dio.get(Url.GET_SUPPORTED_CURRENCIES);
+    List<String> currencies = [];
+    List<dynamic> currencyResponses = response.data as List;
+    for (int i = 0; i < currencyResponses.length; i++) {
+      currencies.add(currencyResponses[i] as String);
+    }
+    return currencies;
+  }
+
+  Future<double> getPriceConverted(String id, String currency) async {
+    final response = await dio.get(Url.CONVERT_PRICE,
+        queryParameters: {'ids': id, 'vs_currencies': currency});
+    return response.data[id][currency] as double;
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:interactive_chart/interactive_chart.dart';
 import 'package:vn_crypto/data/model/category.dart';
+import 'package:vn_crypto/data/model/coin_detail.dart';
 import 'package:vn_crypto/data/model/coin_response.dart';
 import 'package:vn_crypto/data/model/global.dart';
 import 'package:vn_crypto/data/model/item_coin.dart';
@@ -52,5 +54,29 @@ class Api {
     final response = await dio.get(Url.GET_GLOBAL_INFO);
     Global global = Global.fromJson(response.data['data']);
     return global;
+  }
+
+  Future<CoinDetails> getCoin(String coinId) async {
+    final response = await dio.get('${Url.GET_COIN_DETAILS_URL}/$coinId');
+    return CoinDetails.fromJson(response.data);
+  }
+
+  Future<List<CandleData>> getCoinOhlc(
+      String coinId, String currency, int days) async {
+    final response = await dio.get('${Url.GET_COIN_DETAILS_URL}/$coinId/ohlc',
+        queryParameters: {'vs_currency': currency, 'days': days});
+    List<CandleData> candleDatas = [];
+    List<dynamic> ohlcReponse = response.data as List;
+    for (List<dynamic> ohlc in ohlcReponse) {
+      candleDatas.add(CandleData(
+          timestamp: ohlc[0],
+          open: ohlc[1],
+          high: ohlc[2],
+          low: ohlc[3],
+          close: ohlc[4],
+          volume: null
+      ));
+    }
+    return candleDatas;
   }
 }

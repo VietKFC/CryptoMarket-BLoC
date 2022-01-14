@@ -6,7 +6,7 @@ import 'package:vn_crypto/data/repository/coins_repository.dart';
 import 'package:vn_crypto/ultils/Constant.dart';
 
 class ListCoinBloc extends Bloc<ListCoinEvent, ListCoinState> {
-  final ListCoinRepository listCoinRepository;
+  final CoinRepository listCoinRepository;
 
   ListCoinBloc({required this.listCoinRepository})
       : super(ListCoinStateInitialized()) {

@@ -10,7 +10,7 @@ import 'package:vn_crypto/data/repository/coins_repository.dart';
 import 'package:vn_crypto/ultils/Constant.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final ListCoinRepository listCoinRepository;
+  final CoinRepository listCoinRepository;
   final CategoryRepository categoryRepository;
   String currency = "usd";
 

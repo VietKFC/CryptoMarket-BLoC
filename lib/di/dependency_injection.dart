@@ -10,8 +10,9 @@ configureInjection() async {
   getIt.registerSingleton<Dio>(Dio());
   getIt.registerLazySingleton<Api>(() => Api(dio: getIt<Dio>()));
 
-  getIt.registerLazySingleton<ListCoinRepository>(
-      () => ListCoinRepository(api: getIt.get<Api>()));
+  getIt.registerLazySingleton<CoinRepository>(
+      () => CoinRepository(api: getIt.get<Api>()));
+
   getIt.registerLazySingleton<CategoryRepository>(
       () => CategoryRepository(api: getIt.get<Api>()));
 }

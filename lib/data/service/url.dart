@@ -4,4 +4,5 @@ class Url {
   static const GET_TRENDING_URL = "$BASE_URL/search/trending";
   static const GET_CATEGORIES = "$BASE_URL/coins/categories";
   static const GET_GLOBAL_INFO = "$BASE_URL/global/decentralized_finance_defi";
+  static const GET_COIN_DETAILS_URL = "$BASE_URL/coins";
 }

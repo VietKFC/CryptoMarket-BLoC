@@ -16,24 +16,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   HomeBloc({required this.categoryRepository, required this.listCoinRepository})
       : super(HomeStateInitialized()) {
-    on<HomeLoaded>((event, emit) => _onGetHomeData());
+    on<HomeLoaded>((_, emit) => _onGetHomeData(emit));
   }
 
-  void _onGetHomeData() async {
+  void _onGetHomeData(Emitter<HomeState> emit) async {
     emit(HomeLoading());
     List<ItemCoin> coins = await listCoinRepository.getCoins(currency);
-    List<ItemTrendingCoin> trendingCoins =
-        await listCoinRepository.getTrendingCoins();
+    List<ItemTrendingCoin> trendingCoins = await listCoinRepository.getTrendingCoins();
     List<Category> categories = await categoryRepository.getCategories();
     Global global = await listCoinRepository.getGlobalInfo();
     if (coins.isEmpty) {
       emit(HomeLoadFailed(AppStrings.errorLoadDataFailed));
     } else {
       emit(HomeLoadSuccess(
-          coins: coins,
-          trendingCoins: trendingCoins,
-          categories: categories,
-          global: global));
+          coins: coins, trendingCoins: trendingCoins, categories: categories, global: global));
     }
   }
 }

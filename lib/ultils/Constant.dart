@@ -3,6 +3,7 @@ class AppStrings {
   static const String converter = "Converter";
   static const String following = "Following";
   static const String errorLoadDataFailed = "Fail to get data";
+  static const String errorConvertCoin = "Cannot convert this coin";
   static const String topCoins = "Top coins";
   static const String trending = "Trending";
   static const String categories = "Categories";

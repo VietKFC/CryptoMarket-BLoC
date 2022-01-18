@@ -3,21 +3,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vn_crypto/bloc/list_coin/list_coin_bloc.dart';
 import 'package:vn_crypto/bloc/list_coin/list_coin_event.dart';
 import 'package:vn_crypto/bloc/list_coin/list_coin_state.dart';
+import 'package:vn_crypto/data/model/coin_local.dart';
 import 'package:vn_crypto/data/model/item_coin.dart';
 import 'package:vn_crypto/data/repository/coins_repository.dart';
+import 'package:vn_crypto/data/repository/follow_repository.dart';
 import 'package:vn_crypto/di/dependency_injection.dart';
 import 'package:vn_crypto/ui/components/common/CoinSearchBar.dart';
 import 'package:vn_crypto/ui/components/items/ListCoinItem.dart';
-import 'package:vn_crypto/ultils/Constant.dart';
 import 'package:vn_crypto/ui/screen/CoinDetailsScreen.dart';
+import 'package:vn_crypto/ultils/Constant.dart';
 
 class ListCoinScreen extends StatelessWidget {
   const ListCoinScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var listCoinBloc =
-    ListCoinBloc(listCoinRepository: getIt.get<CoinRepository>())
+    var listCoinBloc = ListCoinBloc(
+        listCoinRepository: getIt.get<CoinRepository>(),
+        followRepository: getIt.get<FollowRepository>())
       ..add(ListCoinLoaded());
     return BlocProvider(
         create: (_) => listCoinBloc,
@@ -46,8 +49,7 @@ class ListCoinScreen extends StatelessWidget {
                           color: Colors.black,
                         )
                       ]),
-                  body: buildBody(state: state)
-              );
+                  body: buildBody(state: state));
             },
           ),
         ));
@@ -68,16 +70,33 @@ class ListCoinScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         return GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                  CoinDetailsScreen(coinId: list[index].id)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          CoinDetailsScreen(coin: list[index])));
             },
-            child: ListCoinItem(coin: list[index]));
+            child: ListCoinItem(
+                coin: list[index],
+                onFollowingClick: (coin) =>
+                    _onFollowingClick(context: context, coin: coin)));
       },
       itemCount: list.length,
-      separatorBuilder: (_, context) =>
-      const Divider(
+      separatorBuilder: (_, context) => const Divider(
         height: 1,
       ),
     );
+  }
+
+  _onFollowingClick({var context, required ItemCoin coin}) {
+    if(coin.isFollowing) {
+      BlocProvider.of<ListCoinBloc>(context)
+          .add(UnFollowingCoin(coin.id));
+      coin.isFollowing = false;
+    } else {
+      BlocProvider.of<ListCoinBloc>(context)
+          .add(FollowingCoin(CoinLocal.fromItemCoin(coin)));
+      coin.isFollowing = true;
+    }
   }
 }

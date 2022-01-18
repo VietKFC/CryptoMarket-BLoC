@@ -6,24 +6,41 @@ import 'package:url_launcher/link.dart';
 import 'package:vn_crypto/bloc/coin_details/coin_details_bloc.dart';
 import 'package:vn_crypto/bloc/coin_details/coin_details_event.dart';
 import 'package:vn_crypto/bloc/coin_details/coin_details_state.dart';
+import 'package:vn_crypto/data/model/coin_detail.dart';
+import 'package:vn_crypto/data/model/coin_local.dart';
+import 'package:vn_crypto/data/model/item_coin.dart';
 import 'package:vn_crypto/data/repository/coins_repository.dart';
+import 'package:vn_crypto/data/repository/follow_repository.dart';
 import 'package:vn_crypto/di/dependency_injection.dart';
 import 'package:vn_crypto/ui/components/common/price_change_with_border.dart';
 import 'package:vn_crypto/ultils/Constant.dart';
 
-class CoinDetailsScreen extends StatelessWidget {
-  final String coinId;
+class CoinDetailsScreen extends StatefulWidget {
+  final ItemCoin coin;
 
-  const CoinDetailsScreen({required this.coinId, Key? key}) : super(key: key);
+  const CoinDetailsScreen({required this.coin, Key? key}) : super(key: key);
+
+  @override
+  State<CoinDetailsScreen> createState() => _CoinDetailsScreenState();
+}
+
+class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
+  late Icon iconFollowing;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) =>
-            CoinDetailsBloc(coinRepository: getIt.get<CoinRepository>())
-              ..add(CoinDetailsLoaded(coinId)),
+        create: (_) => CoinDetailsBloc(
+            coinRepository: getIt.get<CoinRepository>(),
+            followRepository: getIt.get<FollowRepository>())
+          ..add(CoinDetailsLoaded(widget.coin.id)),
         child: BlocBuilder<CoinDetailsBloc, CoinDetailsState>(
             builder: (context, state) {
+          iconFollowing = widget.coin.isFollowing
+              ? const Icon(Icons.star_outlined,
+                  color: Color(AppColors.colorDodgerBlue))
+              : const Icon(Icons.star_border, color: Colors.black);
+
           if (state is CoinDetailsLoadSuccess) {
             return Scaffold(
                 appBar: AppBar(
@@ -31,9 +48,9 @@ class CoinDetailsScreen extends StatelessWidget {
                       title: state.coin.name, image: state.coin.image.large),
                   actions: [
                     IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.star_border),
-                        color: Colors.black)
+                        onPressed: () =>
+                            setState(() => _onFollowingClick(context: context)),
+                        icon: iconFollowing)
                   ],
                   leading: IconButton(
                       onPressed: () => Navigator.pop(context),
@@ -47,41 +64,13 @@ class CoinDetailsScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                          Text(
-                            state.coin.symbol.toUpperCase(),
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 16),
-                          ),
-                          const SizedBox(height: 8),
-                          priceWithPriceChange(
-                              price: state.coin.marketData.currentPrice.usd,
-                              priceChangeRate: state
-                                  .coin.marketData.priceChangePercentage24h),
-                          const SizedBox(height: 8),
-                          athAndAthDate(
-                              ath: state.coin.marketData.ath.usd,
-                              athDate: state.coin.marketData.athDate.usd),
+                          coinDetailsHeader(coin: state.coin),
                           const SizedBox(height: 24),
                           SizedBox(
                               height: 400,
                               child: coinChart(candleDatas: state.candleDatas)),
                           const SizedBox(height: 60),
-                          const Text(AppStrings.textStatic,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500)),
-                          const SizedBox(height: 16),
-                          currentPriceAndAth(
-                              context: context,
-                              currentPrice:
-                                  state.coin.marketData.currentPrice.usd,
-                              ath: state.coin.marketData.ath.usd),
-                          const SizedBox(height: 32),
-                          marketCapAndUrl(
-                              coinMarketCap:
-                                  state.coin.marketData.marketCap.usd,
-                              link: state.coin.links.homepage.first)
+                          coinDetailsFooter(coin: state.coin)
                         ]))));
           } else {
             return Scaffold(
@@ -103,6 +92,49 @@ class CoinDetailsScreen extends StatelessWidget {
                         child: Text(AppStrings.errorLoadDataFailed)));
           }
         }));
+  }
+
+  Widget coinDetailsHeader({required CoinDetails coin}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          coin.symbol.toUpperCase(),
+          style: const TextStyle(color: Colors.black, fontSize: 16),
+        ),
+        const SizedBox(height: 8),
+        priceWithPriceChange(
+            price: coin.marketData.currentPrice.usd,
+            priceChangeRate: coin.marketData.priceChangePercentage24h),
+        const SizedBox(height: 8),
+        athAndAthDate(
+            ath: coin.marketData.ath.usd, athDate: coin.marketData.athDate.usd),
+      ],
+    );
+  }
+
+  Widget coinDetailsFooter({required CoinDetails coin}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(AppStrings.textStatic,
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.w500)),
+        const SizedBox(height: 16),
+        currentPriceAndAth(
+            context: context,
+            currentPrice: coin.marketData.currentPrice.usd,
+            ath: coin.marketData.ath.usd),
+        const SizedBox(height: 32),
+        marketCapAndUrl(
+            coinMarketCap: coin.marketData.marketCap.usd,
+            link: coin.links.homepage.first)
+      ],
+    );
   }
 
   Widget titleListCoin({required String title, required String image}) {
@@ -194,11 +226,10 @@ class CoinDetailsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 16, right: 16, bottom: 16),
-              child: marketCap(marketCap: coinMarketCap),
-            ),
-          ),
+              child: Padding(
+                  padding:
+                      const EdgeInsets.only(top: 16, right: 16, bottom: 16),
+                  child: marketCap(marketCap: coinMarketCap))),
           Container(color: Colors.black38, child: const SizedBox(width: 1)),
           Expanded(
             child: Padding(
@@ -253,6 +284,18 @@ class CoinDetailsScreen extends StatelessWidget {
 
     for (int i = 0; i < data.length; i++) {
       data[i].trends = [ma7[i]];
+    }
+  }
+
+  _onFollowingClick({var context}) {
+    if (widget.coin.isFollowing) {
+      BlocProvider.of<CoinDetailsBloc>(context)
+          .add(UnFollowingCoin(widget.coin.id));
+      widget.coin.isFollowing = false;
+    } else {
+      BlocProvider.of<CoinDetailsBloc>(context)
+          .add(FollowingCoin(CoinLocal.fromItemCoin(widget.coin)));
+      widget.coin.isFollowing = true;
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:vn_crypto/data/model/coin_detail.dart';
 
 part 'item_coin.g.dart';
 
@@ -23,9 +24,21 @@ class ItemCoin {
   double changePercent;
   @JsonKey(name: 'image')
   String image;
+  bool isFollowing = false;
 
   factory ItemCoin.fromJson(Map<String, dynamic> json) =>
       _$ItemCoinFromJson(json);
+
+  factory ItemCoin.fromCoinDetails(CoinDetails coin) =>
+      ItemCoin(
+          coin.id,
+          coin.name,
+          coin.symbol,
+          coin.marketData.currentPrice.usd,
+          coin.marketData.marketCap.usd,
+          coin.marketCapRank,
+          coin.marketData.priceChangePercentage24h,
+          coin.image.large);
 
   Map<String, dynamic> toJson() => _$ItemCoinToJson(this);
 }

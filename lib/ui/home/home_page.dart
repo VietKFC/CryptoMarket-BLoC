@@ -13,6 +13,7 @@ import 'package:vn_crypto/ui/components/items/CategoryItem.dart';
 import 'package:vn_crypto/ui/components/items/TopCoinItem.dart';
 import 'package:vn_crypto/ui/components/items/TrendingCoinItem.dart';
 import 'package:vn_crypto/ui/components/text/ScrollingText.dart';
+import 'package:vn_crypto/ui/screen/FollowingCoinsScreen.dart';
 import 'package:vn_crypto/ultils/Constant.dart';
 import 'package:vn_crypto/ultils/StringUtils.dart';
 
@@ -37,7 +38,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => HomeBloc(
+      create: (_) =>
+      HomeBloc(
           listCoinRepository: getIt.get<CoinRepository>(),
           categoryRepository: getIt.get<CategoryRepository>())
         ..add(HomeLoaded()),
@@ -96,10 +98,17 @@ class _HomePageState extends State<HomePage> {
                           child: ScrollingText(
                               scrollAxis: Axis.horizontal,
                               text:
-                                  "${AppStrings.defiMarketCap}${StringUtils.getBillionNumber(state.global.marketCap)}  -  "
-                                  "${AppStrings.ethMarketCap}${StringUtils.getBillionNumber(state.global.ethMarketCap)}  -  "
-                                  "${AppStrings.tradingVolume}${StringUtils.getBillionNumber(state.global.tradingVolume)}  -  "
-                                  "${AppStrings.topCoin}${state.global.topCoinName}",
+                              "${AppStrings.defiMarketCap}${StringUtils
+                                  .getBillionNumber(
+                                  state.global.marketCap)}  -  "
+                                  "${AppStrings.ethMarketCap}${StringUtils
+                                  .getBillionNumber(
+                                  state.global.ethMarketCap)}  -  "
+                                  "${AppStrings.tradingVolume}${StringUtils
+                                  .getBillionNumber(
+                                  state.global.tradingVolume)}  -  "
+                                  "${AppStrings.topCoin}${state.global
+                                  .topCoinName}",
                               textStyle: const TextStyle(
                                   fontSize: 16, color: Colors.white)),
                         )
@@ -107,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsets.only(top: 32, left: 13, right: 13),
+                      const EdgeInsets.only(top: 32, left: 13, right: 13),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -145,39 +154,47 @@ class _HomePageState extends State<HomePage> {
                               )
                             ],
                           ),
-                          Stack(
-                            children: [
-                              SizedBox(
-                                width: 161,
-                                height: 50,
-                                child: Card(
-                                  elevation: 3,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  color: Colors.white,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        ImageAssetString.followingAsset,
-                                        width: 30,
-                                        height: 30,
-                                      ),
-                                      const Padding(
-                                        padding: EdgeInsets.only(left: 10),
-                                        child: Text(
-                                          AppStrings.following,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
+                          GestureDetector(
+                            onTap: () =>
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (_) => const FollowingCoinsScreen()
+                                    )),
+                            child: Stack(
+                              children: [
+                                SizedBox(
+                                  width: 161,
+                                  height: 50,
+                                  child: Card(
+                                    elevation: 3,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            10)),
+                                    color: Colors.white,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .center,
+                                      children: [
+                                        Image.asset(
+                                          ImageAssetString.followingAsset,
+                                          width: 30,
+                                          height: 30,
                                         ),
-                                      )
-                                    ],
+                                        const Padding(
+                                          padding: EdgeInsets.only(left: 10),
+                                          child: Text(
+                                            AppStrings.following,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           )
                         ],
                       ),

@@ -24,8 +24,7 @@ class TrendingCoinItemState extends State<TrendingCoinItem> {
         width: 128,
         height: 128,
         child: Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -34,8 +33,7 @@ class TrendingCoinItemState extends State<TrendingCoinItem> {
                   children: [
                     Expanded(
                       child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 6, top: 12, bottom: 12),
+                          padding: const EdgeInsets.only(left: 6, top: 12, bottom: 12),
                           child: Image.network(
                             itemCoin.thumb,
                             width: 34,
@@ -53,16 +51,13 @@ class TrendingCoinItemState extends State<TrendingCoinItem> {
                             height: 17,
                             child: DecoratedBox(
                                 decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromRGBO(188, 185, 185, 1),
+                                    color: const Color.fromRGBO(188, 185, 185, 1),
                                     borderRadius: BorderRadius.circular(3))),
                           ),
                           Text(
                             "${AppStrings.rankTrendingCoin}${itemCoin.rank.toString()}",
                             style: const TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.white),
+                                fontSize: 11, fontWeight: FontWeight.normal, color: Colors.white),
                           )
                         ],
                       ),
@@ -73,10 +68,10 @@ class TrendingCoinItemState extends State<TrendingCoinItem> {
                   padding: const EdgeInsets.only(left: 12),
                   child: Text(
                     itemCoin.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                        fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Padding(
@@ -84,9 +79,7 @@ class TrendingCoinItemState extends State<TrendingCoinItem> {
                   child: Text(
                     "(${itemCoin.symbol})",
                     style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                        fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Padding(
@@ -94,9 +87,7 @@ class TrendingCoinItemState extends State<TrendingCoinItem> {
                   child: Text(
                     "${AppStrings.scoreCoin}${itemCoin.score}",
                     style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.normal),
+                        fontSize: 12, color: Colors.grey, fontWeight: FontWeight.normal),
                   ),
                 )
               ],

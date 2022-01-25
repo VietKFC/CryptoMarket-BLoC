@@ -7,14 +7,9 @@ import 'package:vn_crypto/ultils/Constant.dart';
 class ConvertCoinBloc extends Bloc<ConvertCoinEvent, ConvertCoinState> {
   final ConvertCoinRepository convertCoinRepository;
 
-  ConvertCoinBloc({required this.convertCoinRepository}) : super(ConvertCoinInitialize());
-
-  void getSupportedCurrencies() {
-    on<ConvertCoinLoaded>((event, emit) => _onGetSupportedCurrenciesData());
-  }
-
-  void getPriceConverted(String id, String currency) {
+  ConvertCoinBloc({required this.convertCoinRepository}) : super(ConvertCoinInitialize()) {
     on<ConvertCoinLoaded>((event, emit) => _onGetPriceConvertedData(event, emit));
+    on<SupportedCoinsLoaded>((event, emit) => _onGetSupportedCurrenciesData());
   }
 
   void _onGetSupportedCurrenciesData() async {

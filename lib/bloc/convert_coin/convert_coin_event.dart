@@ -5,6 +5,10 @@ abstract class ConvertCoinEvent extends Equatable {
   List<Object?> get props => throw UnimplementedError();
 }
 
+class SupportedCoinsLoaded extends ConvertCoinEvent {
+  SupportedCoinsLoaded();
+}
+
 class ConvertCoinLoaded extends ConvertCoinEvent {
   final String id;
   final String currency;

@@ -4,13 +4,26 @@ import 'package:vn_crypto/data/model/item_coin.dart';
 import 'package:vn_crypto/ui/components/common/price_change.dart';
 import 'package:vn_crypto/ultils/Constant.dart';
 
-class ListCoinItem extends StatelessWidget {
+class ListCoinItem extends StatefulWidget {
   final ItemCoin coin;
+  final Function(ItemCoin coin) onFollowingClick;
 
-  const ListCoinItem({required this.coin, Key? key}) : super(key: key);
+  const ListCoinItem(
+      {required this.coin, required this.onFollowingClick, Key? key})
+      : super(key: key);
+
+  @override
+  State<ListCoinItem> createState() => _ListCoinItemState();
+}
+
+class _ListCoinItemState extends State<ListCoinItem> {
+  late String iconFollowingString;
 
   @override
   Widget build(BuildContext context) {
+    iconFollowingString = widget.coin.isFollowing
+        ? ImageAssetString.icFollowing
+        : ImageAssetString.icUnFollowing;
     return Container(
       color: Colors.white,
       child: Column(
@@ -21,22 +34,22 @@ class ListCoinItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.network(coin.image, width: 35, height: 35),
+                Image.network(widget.coin.image, width: 35, height: 35),
                 const SizedBox(width: 6),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    titleWithFollow(title: coin.name),
+                    titleWithFollow(title: widget.coin.name),
                     const SizedBox(height: 4),
-                    rankAndPriceVolatility(rank: '${coin.rank}')
+                    rankAndPriceVolatility(rank: '${widget.coin.rank}')
                   ],
                 ),
                 Expanded(
                     child: priceAndMarketCap(
-                        price: '${coin.curerentPrice}',
-                        mCap: '${coin.marketCap}'))
+                        price: '${widget.coin.curerentPrice}',
+                        mCap: '${widget.coin.marketCap}'))
               ],
             ),
           ),
@@ -51,10 +64,17 @@ class ListCoinItem extends StatelessWidget {
         Text(title,
             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
         const SizedBox(width: 8),
-        SvgPicture.asset(
-          ImageAssetString.icUnFollowing,
-          width: 16,
-        )
+        GestureDetector(
+            child: SvgPicture.asset(
+              iconFollowingString,
+              width: 16,
+            ),
+            onTap: () => setState(() {
+                  widget.onFollowingClick(widget.coin);
+                  iconFollowingString = widget.coin.isFollowing
+                      ? ImageAssetString.icFollowing
+                      : ImageAssetString.icUnFollowing;
+                }))
       ],
     );
   }
@@ -77,7 +97,7 @@ class ListCoinItem extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 8),
-        PriceChange(priceChangeRate: coin.changePercent)
+        PriceChange(priceChangeRate: widget.coin.changePercent)
       ],
     );
   }

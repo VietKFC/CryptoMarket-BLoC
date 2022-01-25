@@ -19,8 +19,9 @@ class CoinDetails {
   Image image;
   @JsonKey(name: 'market_data')
   MarketData marketData;
-  @JsonKey(name: 'marketcap_rank')
+  @JsonKey(name: 'market_cap_rank')
   int marketCapRank;
+  bool isFollowing = false;
 
   CoinDetails(this.id, this.symbol, this.name, this.links, this.image,
       this.marketData, this.marketCapRank);

@@ -8,7 +8,8 @@ class AppStrings {
   static const String trending = "Trending";
   static const String categories = "Categories";
 
-  static const String titleListTopCoin = "List Top Coin";
+  static const String titleListTopCoin = "List Top Coins";
+  static const String titleFollowingCoin = "Following Coins";
   static const String textMCap = "MCap \$";
   static const String textEmptyList = "Empty List.";
   static const String textCurrency = "usd";
@@ -45,6 +46,7 @@ class AppColors {
   static const int colorAmaranth = 0xFFEA3943;
   static const int colorMountainMeadow = 0xFF17C784;
   static const int colorSliver = 0xFFBCB9B9;
+  static const int colorDodgerBlue = 0xFF4891FF;
 }
 
 class Constant {

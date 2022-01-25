@@ -74,8 +74,7 @@ class Api {
           high: ohlc[2],
           low: ohlc[3],
           close: ohlc[4],
-          volume: null
-      ));
+          volume: null));
     }
     return candleDatas;
   }

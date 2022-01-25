@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class AppStrings {
   static const String appName = "VNCrypto";
   static const String converter = "Converter";
@@ -7,6 +9,9 @@ class AppStrings {
   static const String topCoins = "Top coins";
   static const String trending = "Trending";
   static const String categories = "Categories";
+  static const String convertCoin = "Convert coin";
+  static const String ETH = "eth";
+  static const String BTC = "btc";
 
   static const String titleListTopCoin = "List Top Coins";
   static const String titleFollowingCoin = "Following Coins";
@@ -27,12 +32,17 @@ class AppStrings {
   static const String textURL = "URL";
   static const String textCurrentAndATH = "Current/ATH";
   static const String textAth = "ATH";
+  static const String COMMA = ",";
+  static const String DOT = ".";
 }
 
 class ImageAssetString {
   static const String logoAsset = "assets/images/logo.png";
   static const String converterAsset = "assets/images/converter.png";
   static const String followingAsset = "assets/images/eyes.png";
+  static const String icDrop = 'assets/images/ic_drop_down.png';
+  static const String icSearch = 'assets/images/ic_search.png';
+  static const String icChecked = 'assets/images/ic_checked_blue.png';
 
   static const String icFollowing = 'assets/images/ic_follow.svg';
   static const String icUnFollowing = 'assets/images/ic_un_follow.svg';
@@ -46,6 +56,9 @@ class AppColors {
   static const int colorAmaranth = 0xFFEA3943;
   static const int colorMountainMeadow = 0xFF17C784;
   static const int colorSliver = 0xFFBCB9B9;
+
+  static const Color colorMystic = Color.fromRGBO(224, 227, 237, 1);
+  static const Color colorConcrete = Color.fromRGBO(242, 242, 242, 1);
   static const int colorDodgerBlue = 0xFF4891FF;
 }
 

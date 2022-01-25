@@ -13,6 +13,7 @@ import 'package:vn_crypto/ui/components/items/CategoryItem.dart';
 import 'package:vn_crypto/ui/components/items/TopCoinItem.dart';
 import 'package:vn_crypto/ui/components/items/TrendingCoinItem.dart';
 import 'package:vn_crypto/ui/components/text/ScrollingText.dart';
+import 'package:vn_crypto/ui/convertcoin/convert_coin.dart';
 import 'package:vn_crypto/ui/screen/FollowingCoinsScreen.dart';
 import 'package:vn_crypto/ultils/Constant.dart';
 import 'package:vn_crypto/ultils/StringUtils.dart';
@@ -25,21 +26,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  void loadCoins() async {
-    BlocProvider.of<HomeBloc>(context).add(HomeLoaded());
-  }
-
   @override
   void initState() {
     super.initState();
-    loadCoins();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-      HomeBloc(
+      create: (_) => HomeBloc(
           listCoinRepository: getIt.get<CoinRepository>(),
           categoryRepository: getIt.get<CategoryRepository>())
         ..add(HomeLoaded()),
@@ -62,10 +57,8 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.only(left: 10),
                   child: Text(
                     AppStrings.appName,
-                    style: TextStyle(
-                        fontSize: 23,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                    style:
+                        TextStyle(fontSize: 23, color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                 )
               ],
@@ -89,8 +82,7 @@ class _HomePageState extends State<HomePage> {
                           child: DecoratedBox(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20)),
+                                      topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                                   color: Color.fromRGBO(72, 145, 255, 1))),
                         ),
                         SizedBox(
@@ -98,67 +90,64 @@ class _HomePageState extends State<HomePage> {
                           child: ScrollingText(
                               scrollAxis: Axis.horizontal,
                               text:
-                              "${AppStrings.defiMarketCap}${StringUtils
-                                  .getBillionNumber(
-                                  state.global.marketCap)}  -  "
-                                  "${AppStrings.ethMarketCap}${StringUtils
-                                  .getBillionNumber(
-                                  state.global.ethMarketCap)}  -  "
-                                  "${AppStrings.tradingVolume}${StringUtils
-                                  .getBillionNumber(
-                                  state.global.tradingVolume)}  -  "
-                                  "${AppStrings.topCoin}${state.global
-                                  .topCoinName}",
-                              textStyle: const TextStyle(
-                                  fontSize: 16, color: Colors.white)),
+                                  "${AppStrings.defiMarketCap}${StringUtils.getBillionNumber(state.global.marketCap)}  -  "
+                                  "${AppStrings.ethMarketCap}${StringUtils.getBillionNumber(state.global.ethMarketCap)}  -  "
+                                  "${AppStrings.tradingVolume}${StringUtils.getBillionNumber(state.global.tradingVolume)}  -  "
+                                  "${AppStrings.topCoin}${state.global.topCoinName}",
+                              textStyle: const TextStyle(fontSize: 16, color: Colors.white)),
                         )
                       ],
                     ),
                     Padding(
-                      padding:
-                      const EdgeInsets.only(top: 32, left: 13, right: 13),
+                      padding: const EdgeInsets.only(top: 32, left: 13, right: 13),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Stack(
                             children: [
                               SizedBox(
-                                width: 161,
-                                height: 50,
-                                child: Card(
-                                  elevation: 3,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  color: Colors.white,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        ImageAssetString.converterAsset,
-                                        width: 21,
-                                        height: 21,
+                                  width: 161,
+                                  height: 50,
+                                  child: GestureDetector(
+                                    child: Card(
+                                      elevation: 3,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10)),
+                                      color: Colors.white,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            ImageAssetString.converterAsset,
+                                            width: 21,
+                                            height: 21,
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.only(left: 10),
+                                            child: Text(
+                                              AppStrings.converter,
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                      const Padding(
-                                        padding: EdgeInsets.only(left: 10),
-                                        child: Text(
-                                          AppStrings.converter,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              )
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ConvertCoinPage(coins: state.coins)));
+                                    },
+                                  ))
                             ],
                           ),
                           GestureDetector(
-                            onTap: () =>
-                                Navigator.push(context, MaterialPageRoute(
-                                    builder: (_) => const FollowingCoinsScreen()
-                                    )),
+                            onTap: () => Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => const FollowingCoinsScreen())),
                             child: Stack(
                               children: [
                                 SizedBox(
@@ -167,12 +156,10 @@ class _HomePageState extends State<HomePage> {
                                   child: Card(
                                     elevation: 3,
                                     shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            10)),
+                                        borderRadius: BorderRadius.circular(10)),
                                     color: Colors.white,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Image.asset(
                                           ImageAssetString.followingAsset,
@@ -205,12 +192,10 @@ class _HomePageState extends State<HomePage> {
                 );
               } else if (state is HomeLoading) {
                 return Container(
-                    alignment: Alignment.center,
-                    child: const CircularProgressIndicator());
+                    alignment: Alignment.center, child: const CircularProgressIndicator());
               } else {
                 return Container(
-                    alignment: Alignment.center,
-                    child: const CircularProgressIndicator());
+                    alignment: Alignment.center, child: const CircularProgressIndicator());
               }
             }),
           ),
@@ -219,8 +204,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget listData(List<ItemCoin> coins, List<ItemTrendingCoin> trendingCoins,
-      List<Category> categories) {
+  Widget listData(
+      List<ItemCoin> coins, List<ItemTrendingCoin> trendingCoins, List<Category> categories) {
     return Padding(
         padding: const EdgeInsets.only(left: 9),
         child: Column(
@@ -239,10 +224,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(left: 7, top: 20),
               child: Text(
                 AppStrings.trending,
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
               ),
             ),
             SizedBox(
@@ -260,10 +242,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(left: 7, top: 20),
               child: Text(
                 AppStrings.categories,
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
               ),
             ),
             Padding(
@@ -289,8 +268,7 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.only(left: 16, top: 20),
       child: Text(
         coinStr,
-        style: const TextStyle(
-            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
       ),
     );
   }

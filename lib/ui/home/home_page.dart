@@ -15,6 +15,7 @@ import 'package:vn_crypto/ui/components/items/TrendingCoinItem.dart';
 import 'package:vn_crypto/ui/components/text/ScrollingText.dart';
 import 'package:vn_crypto/ui/convertcoin/convert_coin.dart';
 import 'package:vn_crypto/ui/screen/FollowingCoinsScreen.dart';
+import 'package:vn_crypto/ui/screen/ListCoinScreen.dart';
 import 'package:vn_crypto/ultils/Constant.dart';
 import 'package:vn_crypto/ultils/StringUtils.dart';
 
@@ -186,7 +187,29 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-                    TextCoinTitle(AppStrings.topCoins),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextCoinTitle(AppStrings.topCoins),
+                        Padding(
+                            padding: const EdgeInsets.only(top: 20, right: 15),
+                            child: GestureDetector(
+                              child: const Text(
+                                AppStrings.seeAll,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color(AppColors.colorDodgerBlue),
+                                    decoration: TextDecoration.underline),
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const ListCoinScreen()));
+                              },
+                            ))
+                      ],
+                    ),
                     listData(state.coins, state.trendingCoins, state.categories)
                   ],
                 );
@@ -214,7 +237,7 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 128,
               child: ListView.builder(
-                  itemCount: coins.length,
+                  itemCount: 10,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return TopCoinItem(itemCoin: coins[index]);

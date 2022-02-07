@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vn_crypto/di/dependency_injection.dart';
 import 'package:vn_crypto/ui/components/BottomNav.dart';
 import 'package:vn_crypto/ui/home/home_page.dart';
+import 'package:vn_crypto/ui/investmanagement/invest_management.dart';
 import 'package:vn_crypto/ui/screen/ListCoinScreen.dart';
 
 void main() async {
@@ -16,8 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          primaryColor: Colors.white,
-          appBarTheme: const AppBarTheme(color: Colors.white)),
+          primaryColor: Colors.white, appBarTheme: const AppBarTheme(color: Colors.white)),
       debugShowCheckedModeBanner: false,
       home: const MainScreen(),
     );
@@ -42,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
           children: const [
             HomePage(),
             ListCoinScreen(),
-            Center(child: Text('Invest')),
+            InvestManagementScreen(),
             Center(child: Text('Settings'))
           ],
         ),

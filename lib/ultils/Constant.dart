@@ -12,6 +12,12 @@ class AppStrings {
   static const String convertCoin = "Convert coin";
   static const String ETH = "eth";
   static const String BTC = "btc";
+  static const String seeAll = "See All";
+  static const String investManagement = "Invest Management";
+  static const String currentBalance = "Current balance";
+  static const String totalProfitLoss = "Total Profit/Loss";
+  static const String messageSaveInvestSuccess = "Add new invest successfully!";
+  static const String messageDeleteInvestSuccess = "Invest is removed!";
 
   static const String titleListTopCoin = "List Top Coins";
   static const String titleFollowingCoin = "Following Coins";
@@ -56,6 +62,7 @@ class AppColors {
   static const int colorAmaranth = 0xFFEA3943;
   static const int colorMountainMeadow = 0xFF17C784;
   static const int colorSliver = 0xFFBCB9B9;
+  static const int colorWildSand = 0xFFF5F5F5;
 
   static const Color colorMystic = Color.fromRGBO(224, 227, 237, 1);
   static const Color colorConcrete = Color.fromRGBO(242, 242, 242, 1);

@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 abstract class InvestManagementState extends Equatable {
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [];
 }
 
 class InvestManagementInitialize extends InvestManagementState {}

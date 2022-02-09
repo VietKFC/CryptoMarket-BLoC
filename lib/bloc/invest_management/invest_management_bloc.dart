@@ -8,10 +8,11 @@ import 'package:vn_crypto/ultils/Constant.dart';
 class InvestManagementBloc extends Bloc<InvestManagementEvent, InvestManagementState> {
   final InvestRepository investRepository;
 
-  InvestManagementBloc(this.investRepository) : super(InvestManagementInitialize()) {
+  InvestManagementBloc({required this.investRepository}) : super(InvestManagementInitialize()) {
     on<InvestManagementLoaded>((_, emit) => _onGetAllInvests());
     on<InvestManagementSaveCoin>((event, _) => _onSaveInvest(event));
     on<InvestManagementDeleteCoin>((event, _) => _onDeleteInvest(event));
+    on<InvestManagementCoinMarketLoaded>((event, _) => _onGetAllCoinMarket(event));
   }
 
   void _onGetAllInvests() async {
@@ -36,5 +37,16 @@ class InvestManagementBloc extends Bloc<InvestManagementEvent, InvestManagementS
     emit(InvestManagementLoading());
     await investRepository.deleteInvest(itemCoin);
     emit(InvestManagementSuccess(AppStrings.messageDeleteInvestSuccess));
+  }
+
+  void _onGetAllCoinMarket(InvestManagementEvent event) async {
+    String currency = (event as InvestManagementCoinMarketLoaded).currency;
+    emit(InvestManagementLoading());
+    List<ItemCoin> itemCoins = await investRepository.getAllCoinMarket(currency);
+    if (itemCoins.isEmpty) {
+      emit(InvestManagementFailed(AppStrings.errorLoadDataFailed));
+    } else {
+      emit(InvestManagementSuccess(itemCoins));
+    }
   }
 }

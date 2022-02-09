@@ -8,8 +8,7 @@ class ListCoinItem extends StatefulWidget {
   final ItemCoin coin;
   final Function(ItemCoin coin) onFollowingClick;
 
-  const ListCoinItem(
-      {required this.coin, required this.onFollowingClick, Key? key})
+  const ListCoinItem({required this.coin, required this.onFollowingClick, Key? key})
       : super(key: key);
 
   @override
@@ -21,9 +20,9 @@ class _ListCoinItemState extends State<ListCoinItem> {
 
   @override
   Widget build(BuildContext context) {
-    iconFollowingString = widget.coin.isFollowing
-        ? ImageAssetString.icFollowing
-        : ImageAssetString.icUnFollowing;
+    iconFollowingString =
+        widget.coin.isFollowing ? ImageAssetString.icFollowing : ImageAssetString.icUnFollowing;
+    print('isFollowing ${widget.coin.isFollowing}');
     return Container(
       color: Colors.white,
       child: Column(
@@ -48,8 +47,7 @@ class _ListCoinItemState extends State<ListCoinItem> {
                 ),
                 Expanded(
                     child: priceAndMarketCap(
-                        price: '${widget.coin.curerentPrice}',
-                        mCap: '${widget.coin.marketCap}'))
+                        price: '${widget.coin.curerentPrice}', mCap: '${widget.coin.marketCap}'))
               ],
             ),
           ),
@@ -61,8 +59,7 @@ class _ListCoinItemState extends State<ListCoinItem> {
   Widget titleWithFollow({required String title}) {
     return Row(
       children: [
-        Text(title,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+        Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
         const SizedBox(width: 8),
         GestureDetector(
             child: SvgPicture.asset(
@@ -86,8 +83,7 @@ class _ListCoinItemState extends State<ListCoinItem> {
       children: [
         Container(
           decoration: BoxDecoration(
-              color: const Color(AppColors.colorMercury),
-              borderRadius: BorderRadius.circular(3)),
+              color: const Color(AppColors.colorMercury), borderRadius: BorderRadius.circular(3)),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(6, 2, 6, 1),
             child: Text(

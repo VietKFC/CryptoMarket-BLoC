@@ -18,6 +18,8 @@ class AppStrings {
   static const String totalProfitLoss = "Total Profit/Loss";
   static const String messageSaveInvestSuccess = "Add new invest successfully!";
   static const String messageDeleteInvestSuccess = "Invest is removed!";
+  static const String yourAssets = "Your Assets:";
+  static const String addNewAsset = "Add New Asset";
 
   static const String titleListTopCoin = "List Top Coins";
   static const String titleFollowingCoin = "Following Coins";
@@ -49,6 +51,7 @@ class ImageAssetString {
   static const String icDrop = 'assets/images/ic_drop_down.png';
   static const String icSearch = 'assets/images/ic_search.png';
   static const String icChecked = 'assets/images/ic_checked_blue.png';
+  static const String icExpand = 'assets/images/ic_expand.png';
 
   static const String icFollowing = 'assets/images/ic_follow.svg';
   static const String icUnFollowing = 'assets/images/ic_un_follow.svg';

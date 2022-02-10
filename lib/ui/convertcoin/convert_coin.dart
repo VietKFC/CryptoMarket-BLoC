@@ -22,8 +22,8 @@ class ConvertCoinPage extends StatefulWidget {
 class _ConvertCoinPageState extends State<ConvertCoinPage> {
   final List<ItemCoin> coins;
   ItemCoin? coin;
-  Color originalCoinColor = AppColors.colorMystic;
-  Color convertedCoinColor = Colors.white;
+  Color originalCoinColor = Colors.black12;
+  Color convertedCoinColor = Colors.transparent;
   String convertedSymbol = AppStrings.ETH;
   int currentIndex1 = 0;
   int currentIndex2 = 1;
@@ -54,7 +54,6 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
     return BlocProvider(
       create: (context) => coinBloc!,
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
             elevation: 0,
             title: const Text(AppStrings.converter,
@@ -95,7 +94,6 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
                                     coin!.symbol.toUpperCase(),
                                     style: const TextStyle(
                                         fontSize: 16,
-                                        color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -158,8 +156,8 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
                     )),
                 onTap: () {
                   setState(() {
-                    originalCoinColor = AppColors.colorMystic;
-                    convertedCoinColor = Colors.white;
+                    originalCoinColor = Colors.black12;
+                    convertedCoinColor = Colors.transparent;
                   });
                 },
               ),
@@ -185,7 +183,7 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
                               child: Text(
                                 convertedSymbol.toUpperCase(),
                                 style: const TextStyle(
-                                    fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                             ),
                             onTap: () {
@@ -239,8 +237,8 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
               ),
               onTap: () {
                 setState(() {
-                  convertedCoinColor = AppColors.colorMystic;
-                  originalCoinColor = Colors.white;
+                  convertedCoinColor = Colors.black12;
+                  originalCoinColor = Colors.transparent;
                 });
               },
             )
@@ -263,7 +261,7 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
         ),
         Text(
           currency,
-          style: const TextStyle(color: Colors.black, fontSize: 14),
+          style: const TextStyle( fontSize: 14),
         ),
       ],
     );

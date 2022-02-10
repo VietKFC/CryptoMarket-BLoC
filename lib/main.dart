@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vn_crypto/bloc/theme/theme_bloc.dart';
+import 'package:vn_crypto/bloc/theme/theme_event.dart';
+import 'package:vn_crypto/bloc/theme/theme_state.dart';
 import 'package:vn_crypto/di/dependency_injection.dart';
 import 'package:vn_crypto/ui/components/BottomNav.dart';
 import 'package:vn_crypto/ui/home/home_page.dart';
 import 'package:vn_crypto/ui/investmanagement/invest_management.dart';
 import 'package:vn_crypto/ui/screen/ListCoinScreen.dart';
+import 'package:vn_crypto/ui/screen/about_app_screen.dart';
 
 void main() async {
   await configureInjection();
@@ -14,14 +19,20 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-          primaryColor: Colors.white, appBarTheme: const AppBarTheme(color: Colors.white)),
-      debugShowCheckedModeBanner: false,
-      home: const MainScreen(),
-    );
-  }
+  Widget build(BuildContext context) => BlocProvider(
+        create: (_) => ThemeBloc(),
+        child: BlocBuilder<ThemeBloc, ThemeState>(
+            builder: (context, state) => MaterialApp(
+                  theme: ThemeData(
+                      brightness: state is DarkThemeState
+                          ? Brightness.dark
+                          : Brightness.light,
+                      primaryColor: Colors.white,
+                      appBarTheme: const AppBarTheme(color: Colors.white)),
+                  debugShowCheckedModeBanner: false,
+                  home: const MainScreen(),
+                )),
+      );
 }
 
 class MainScreen extends StatefulWidget {
@@ -43,7 +54,7 @@ class _MainScreenState extends State<MainScreen> {
             HomePage(),
             ListCoinScreen(),
             InvestManagementScreen(),
-            Center(child: Text('Settings'))
+            AboutAppScreen()
           ],
         ),
         bottomNavigationBar: BottomNav(

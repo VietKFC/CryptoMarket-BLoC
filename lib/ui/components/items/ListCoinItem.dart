@@ -24,7 +24,7 @@ class _ListCoinItemState extends State<ListCoinItem> {
         widget.coin.isFollowing ? ImageAssetString.icFollowing : ImageAssetString.icUnFollowing;
     print('isFollowing ${widget.coin.isFollowing}');
     return Container(
-      color: Colors.white,
+      color: Colors.transparent,
       child: Column(
         children: [
           Padding(
@@ -83,7 +83,8 @@ class _ListCoinItemState extends State<ListCoinItem> {
       children: [
         Container(
           decoration: BoxDecoration(
-              color: const Color(AppColors.colorMercury), borderRadius: BorderRadius.circular(3)),
+              color: const Color.fromRGBO(188, 185, 185, 1),
+              borderRadius: BorderRadius.circular(3)),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(6, 2, 6, 1),
             child: Text(

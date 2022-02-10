@@ -36,16 +36,12 @@ class _AddInvestDialogState extends State<AddInvestDialog> {
             padding: const EdgeInsets.only(top: 20),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: const [
                 Padding(
-                  padding: const EdgeInsets.only(left: 23, right: 23),
-                  child: Image.asset(
-                    ImageAssetString.icSearch,
-                    width: 23,
-                    height: 23,
-                  ),
+                  padding: EdgeInsets.only(left: 23, right: 23),
+                  child: Icon(Icons.search, size: 24),
                 ),
-                const SearchBarSymbol(),
+                SearchBarSymbol(),
               ],
             ),
           ),

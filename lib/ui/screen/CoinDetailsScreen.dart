@@ -101,7 +101,7 @@ class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
       children: [
         Text(
           coin.symbol.toUpperCase(),
-          style: const TextStyle(color: Colors.black, fontSize: 16),
+          style: const TextStyle(fontSize: 16),
         ),
         const SizedBox(height: 8),
         priceWithPriceChange(
@@ -121,7 +121,6 @@ class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
       children: [
         const Text(AppStrings.textStatic,
             style: TextStyle(
-                color: Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.w500)),
         const SizedBox(height: 16),
@@ -138,17 +137,21 @@ class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
   }
 
   Widget titleListCoin({required String title, required String image}) {
-    return Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.network(image, width: 24, height: 24),
-          const SizedBox(width: 8),
-          Text(
-            title,
-            style: const TextStyle(fontSize: 24, color: Colors.black),
-          )
-        ]);
+    return Center(
+      child: FittedBox(
+        child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.network(image, width: 24, height: 24),
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: const TextStyle(fontSize: 24, color: Colors.black),
+              )
+            ]),
+      ),
+    );
   }
 
   Widget priceWithPriceChange(
@@ -157,7 +160,7 @@ class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
       Text(
         '$price\$',
         style: const TextStyle(
-            fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
+            fontSize: 25, fontWeight: FontWeight.bold),
       ),
       Expanded(
           child: Container(
@@ -171,7 +174,7 @@ class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
     DateTime date = DateTime.parse(athDate);
     String formattedAthDate = '${date.day}/${date.month}/${date.year}';
     return Text('${AppStrings.textAth}: $ath\$ ($formattedAthDate)',
-        style: const TextStyle(color: Colors.black38, fontSize: 12));
+        style: const TextStyle(fontSize: 12));
   }
 
   Widget coinChart({required List<CandleData> candleDatas}) {
@@ -201,7 +204,7 @@ class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
           child: Row(
             children: [
               const Text(AppStrings.textCurrentAndATH,
-                  style: TextStyle(fontSize: 14, color: Colors.black)),
+                  style: TextStyle(fontSize: 14)),
               Expanded(
                   child: Align(
                       alignment: AlignmentDirectional.centerEnd,
@@ -248,11 +251,11 @@ class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(AppStrings.textMarketCap,
-            style: TextStyle(color: Colors.black, fontSize: 14)),
+            style: TextStyle(fontSize: 14)),
         const SizedBox(height: 4),
         Text('$marketCap\$',
             style: const TextStyle(
-                color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold))
+               fontSize: 14, fontWeight: FontWeight.bold))
       ],
     );
   }
@@ -263,7 +266,7 @@ class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(AppStrings.textURL,
-            style: TextStyle(color: Colors.black, fontSize: 14)),
+            style: TextStyle(fontSize: 14)),
         const SizedBox(height: 4),
         Link(
             uri: Uri.tryParse(url),
@@ -272,7 +275,6 @@ class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
                 child: Text(url,
                     style: const TextStyle(
                         decoration: TextDecoration.underline,
-                        color: Colors.black,
                         fontSize: 14,
                         fontWeight: FontWeight.bold))))
       ],

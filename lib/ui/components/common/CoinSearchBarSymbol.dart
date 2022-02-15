@@ -10,7 +10,7 @@ class SearchBarSymbol extends StatelessWidget {
       width: 230,
       height: 50,
       child: Card(
-        color: AppColors.colorConcrete,
+        color: Colors.white70,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
         child: TextFormField(
             decoration: const InputDecoration(

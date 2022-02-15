@@ -68,7 +68,7 @@ class ListCoinScreen extends StatelessWidget {
   Widget listCoin({required List<ItemCoin> list}) {
     return ListView.separated(
       itemBuilder: (context, index) {
-        return GestureDetector(
+        return InkWell(
             onTap: () {
               Navigator.push(
                   context,

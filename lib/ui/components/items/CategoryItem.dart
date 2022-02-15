@@ -31,10 +31,8 @@ class CategoryItemState extends State<CategoryItem> {
               padding: const EdgeInsets.only(left: 13, top: 12),
               child: Text(
                 category.name,
-                style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
@@ -42,9 +40,7 @@ class CategoryItemState extends State<CategoryItem> {
               child: Text(
                 "${AppStrings.textMarketCapFull}${category.marketCap}",
                 style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black),
+                    fontSize: 14, fontWeight: FontWeight.normal),
               ),
             ),
             Padding(
@@ -52,9 +48,7 @@ class CategoryItemState extends State<CategoryItem> {
               child: Text(
                 "${AppStrings.textVolume24h}${category.volume}",
                 style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black),
+                    fontSize: 14, fontWeight: FontWeight.normal),
               ),
             ),
             Expanded(
@@ -76,7 +70,6 @@ class CategoryItemState extends State<CategoryItem> {
                                 child: Text(
                                   "${double.parse(category.marketCapChange.toString()).toStringAsFixed(2)}%",
                                   style: const TextStyle(
-                                      color: Colors.black,
                                       fontWeight: FontWeight.normal,
                                       fontSize: 14),
                                 ),

@@ -40,7 +40,6 @@ class _HomePageState extends State<HomePage> {
           categoryRepository: getIt.get<CategoryRepository>())
         ..add(HomeLoaded()),
       child: Scaffold(
-        backgroundColor: Colors.grey[200],
         appBar: AppBar(
           backgroundColor: Colors.grey[200],
           elevation: 0,
@@ -58,8 +57,10 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.only(left: 10),
                   child: Text(
                     AppStrings.appName,
-                    style:
-                        TextStyle(fontSize: 23, color: Colors.black, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 23,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
                   ),
                 )
               ],
@@ -83,7 +84,8 @@ class _HomePageState extends State<HomePage> {
                           child: DecoratedBox(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20)),
                                   color: Color.fromRGBO(72, 145, 255, 1))),
                         ),
                         SizedBox(
@@ -95,7 +97,8 @@ class _HomePageState extends State<HomePage> {
                                   "${AppStrings.ethMarketCap}${StringUtils.getBillionNumber(state.global.ethMarketCap)}  -  "
                                   "${AppStrings.tradingVolume}${StringUtils.getBillionNumber(state.global.tradingVolume)}  -  "
                                   "${AppStrings.topCoin}${state.global.topCoinName}",
-                              textStyle: const TextStyle(fontSize: 16, color: Colors.white)),
+                              textStyle: const TextStyle(
+                                  fontSize: 16, color: Colors.white)),
                         )
                       ],
                     ),
@@ -114,7 +117,6 @@ class _HomePageState extends State<HomePage> {
                                       elevation: 3,
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(10)),
-                                      color: Colors.white,
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
@@ -128,7 +130,6 @@ class _HomePageState extends State<HomePage> {
                                             child: Text(
                                               AppStrings.converter,
                                               style: TextStyle(
-                                                  color: Colors.black,
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -141,14 +142,18 @@ class _HomePageState extends State<HomePage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  ConvertCoinPage(coins: state.coins)));
+                                                  ConvertCoinPage(
+                                                      coins: state.coins)));
                                     },
                                   ))
                             ],
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => const FollowingCoinsScreen())),
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        const FollowingCoinsScreen())),
                             child: Stack(
                               children: [
                                 SizedBox(
@@ -158,7 +163,6 @@ class _HomePageState extends State<HomePage> {
                                     elevation: 3,
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10)),
-                                    color: Colors.white,
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
@@ -172,7 +176,6 @@ class _HomePageState extends State<HomePage> {
                                           child: Text(
                                             AppStrings.following,
                                             style: TextStyle(
-                                                color: Colors.black,
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -215,10 +218,12 @@ class _HomePageState extends State<HomePage> {
                 );
               } else if (state is HomeLoading) {
                 return Container(
-                    alignment: Alignment.center, child: const CircularProgressIndicator());
+                    alignment: Alignment.center,
+                    child: const CircularProgressIndicator());
               } else {
                 return Container(
-                    alignment: Alignment.center, child: const CircularProgressIndicator());
+                    alignment: Alignment.center,
+                    child: const CircularProgressIndicator());
               }
             }),
           ),
@@ -227,8 +232,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget listData(
-      List<ItemCoin> coins, List<ItemTrendingCoin> trendingCoins, List<Category> categories) {
+  Widget listData(List<ItemCoin> coins, List<ItemTrendingCoin> trendingCoins,
+      List<Category> categories) {
     return Padding(
         padding: const EdgeInsets.only(left: 9),
         child: Column(
@@ -247,7 +252,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(left: 7, top: 20),
               child: Text(
                 AppStrings.trending,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
             SizedBox(
@@ -265,7 +270,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(left: 7, top: 20),
               child: Text(
                 AppStrings.categories,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
@@ -291,7 +296,7 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.only(left: 16, top: 20),
       child: Text(
         coinStr,
-        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
   }

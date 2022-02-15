@@ -71,16 +71,12 @@ class _DialogWidgetState extends State<DialogWidget> {
           padding: const EdgeInsets.only(top: 20),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+            children: const [
               Padding(
-                padding: const EdgeInsets.only(left: 23, right: 23),
-                child: Image.asset(
-                  ImageAssetString.icSearch,
-                  width: 23,
-                  height: 23,
-                ),
+                padding: EdgeInsets.only(left: 15, right: 10),
+                child: Icon(Icons.search, size: 24),
               ),
-              const SearchBarSymbol(),
+              SearchBarSymbol(),
             ],
           ),
         ),
@@ -96,7 +92,7 @@ class _DialogWidgetState extends State<DialogWidget> {
                     ),
                     child: GestureDetector(
                       child: Container(
-                        color: symbols[index].isSelected ? AppColors.colorMystic : Colors.white,
+                        color: symbols[index].isSelected ? Colors.black12 : Colors.transparent,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -104,7 +100,7 @@ class _DialogWidgetState extends State<DialogWidget> {
                               padding: const EdgeInsets.only(left: 23, top: 20, bottom: 20),
                               child: Text(
                                 symbols[index].name.toUpperCase(),
-                                style: const TextStyle(fontSize: 16, color: Colors.black),
+                                style: const TextStyle(fontSize: 16),
                               ),
                             ),
                             Padding(

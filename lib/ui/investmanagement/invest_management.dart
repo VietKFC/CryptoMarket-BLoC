@@ -30,7 +30,6 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
         create: (_) => InvestManagementBloc(investRepository: getIt.get<InvestRepository>())
           ..add(InvestManagementLoaded()),
         child: Scaffold(
-          backgroundColor: Colors.white,
           appBar: AppBar(
             title: const Text(
               AppStrings.investManagement,
@@ -46,7 +45,7 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
                 padding: const EdgeInsets.only(left: 16, top: 10),
                 child: Text(
                   AppStrings.currentBalance,
-                  style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.75)),
+                  style: TextStyle(fontSize: 16),
                 ),
               ),
               Padding(
@@ -54,7 +53,7 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
                 child: Text(
                   "$currentBalance\$",
                   style: const TextStyle(
-                      fontSize: 28, color: Colors.black, fontWeight: FontWeight.bold),
+                      fontSize: 28, fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(
@@ -81,7 +80,7 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
                 padding: EdgeInsets.only(left: 16),
                 child: Text(
                   AppStrings.yourAssets,
-                  style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
               BlocBuilder<InvestManagementBloc, InvestManagementState>(
@@ -114,18 +113,26 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
           child: DecoratedBox(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: const Color(AppColors.colorWildSand))),
+                  color: Colors.black.withOpacity(0.05))),
         ),
         Align(
           alignment: Alignment.centerLeft,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
+              const Padding(
+                padding: EdgeInsets.only(left: 10),
                 child: Text(
                   AppStrings.totalProfitLoss,
-                  style: TextStyle(color: Colors.black.withOpacity(0.75), fontSize: 14),
+                  style: TextStyle(fontSize: 14),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 14),
+                child: Text(
+                  totalProfitLoss >= 0 ? "+$totalProfitLoss\$" : "-$totalProfitLoss\$",
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(

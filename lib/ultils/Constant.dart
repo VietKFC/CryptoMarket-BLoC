@@ -23,6 +23,7 @@ class AppStrings {
 
   static const String titleListTopCoin = "List Top Coins";
   static const String titleFollowingCoin = "Following Coins";
+  static const String titleAboutApp = "About App";
   static const String textMCap = "MCap \$";
   static const String textEmptyList = "Empty List.";
   static const String textCurrency = "usd";
@@ -42,6 +43,13 @@ class AppStrings {
   static const String textAth = "ATH";
   static const String COMMA = ",";
   static const String DOT = ".";
+  static const String textPolicy = "Policy";
+  static const String textFAQ = "FAQ";
+  static const String textShareApp = "ShareApp";
+  static const String textTheme = "Theme";
+
+  static const String textLinkPolicy = "https://coinmarketcap.com/privacy/";
+  static const String textLinkFAQ = "https://www.coingecko.com/en/faq";
 }
 
 class ImageAssetString {

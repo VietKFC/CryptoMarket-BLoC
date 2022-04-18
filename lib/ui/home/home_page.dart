@@ -103,7 +103,8 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 32, left: 13, right: 13),
+                      padding:
+                          const EdgeInsets.only(top: 32, left: 13, right: 13),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -116,9 +117,11 @@ class _HomePageState extends State<HomePage> {
                                     child: Card(
                                       elevation: 3,
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10)),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Image.asset(
                                             ImageAssetString.converterAsset,
@@ -138,22 +141,16 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                     onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ConvertCoinPage(
-                                                      coins: state.coins)));
+                                      Navigator.pushNamed(context,
+                                          ConvertCoinPage.PAGE_ROUTE_NAME,
+                                          arguments: state.coins);
                                     },
                                   ))
                             ],
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) =>
-                                        const FollowingCoinsScreen())),
+                            onTap: () => Navigator.pushNamed(
+                                context, FollowingCoinsScreen.PAGE_ROUTE_NAME),
                             child: Stack(
                               children: [
                                 SizedBox(
@@ -162,9 +159,11 @@ class _HomePageState extends State<HomePage> {
                                   child: Card(
                                     elevation: 3,
                                     shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10)),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Image.asset(
                                           ImageAssetString.followingAsset,

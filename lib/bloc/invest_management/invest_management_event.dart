@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:vn_crypto/data/model/item_coin.dart';
+import 'package:vn_crypto/data/model/invest.dart';
 
 abstract class InvestManagementEvent extends Equatable {
   @override
@@ -9,15 +9,21 @@ abstract class InvestManagementEvent extends Equatable {
 class InvestManagementLoaded extends InvestManagementEvent {}
 
 class InvestManagementSaveCoin extends InvestManagementEvent {
-  final ItemCoin itemCoin;
+  final Invest invest;
 
-  InvestManagementSaveCoin(this.itemCoin);
+  InvestManagementSaveCoin(this.invest);
+}
+
+class InvestManagementUpdateCoin extends InvestManagementEvent {
+  final Invest invest;
+
+  InvestManagementUpdateCoin(this.invest);
 }
 
 class InvestManagementDeleteCoin extends InvestManagementEvent {
-  final ItemCoin itemCoin;
+  final Invest invest;
 
-  InvestManagementDeleteCoin(this.itemCoin);
+  InvestManagementDeleteCoin(this.invest);
 }
 
 class InvestManagementCoinMarketLoaded extends InvestManagementEvent {

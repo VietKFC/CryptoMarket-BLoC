@@ -1,4 +1,5 @@
 import 'package:vn_crypto/data/database/database.dart';
+import 'package:vn_crypto/data/model/invest.dart';
 import 'package:vn_crypto/data/model/item_coin.dart';
 import 'package:vn_crypto/data/service/api.dart';
 import 'package:vn_crypto/di/dependency_injection.dart';
@@ -9,11 +10,13 @@ class InvestRepository {
 
   InvestRepository({required this.api});
 
-  Future<List<ItemCoin>> getAllInvests() => databaseProvider.getAllInvests();
+  Future<List<Invest>> getAllInvests() => databaseProvider.getAllInvests();
 
-  Future<int> saveInvest(ItemCoin itemCoin) => databaseProvider.insertInvest(itemCoin);
+  Future<int> saveInvest(Invest invest) => databaseProvider.insertInvest(invest);
 
-  Future<int> deleteInvest(ItemCoin itemCoin) => databaseProvider.deleteInvest(itemCoin);
+  Future<int> deleteInvest(Invest invest) => databaseProvider.deleteInvest(invest);
+
+  Future<void> updateInvest(Invest invest) => databaseProvider.updateInvest(invest);
 
   Future<List<ItemCoin>> getAllCoinMarket(String currency) => api.getCoins(currency);
 }

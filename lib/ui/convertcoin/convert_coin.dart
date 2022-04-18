@@ -12,6 +12,7 @@ import 'package:vn_crypto/ultils/Constant.dart';
 
 class ConvertCoinPage extends StatefulWidget {
   final List<ItemCoin> coins;
+  static const String PAGE_ROUTE_NAME = "/convert_coin";
 
   const ConvertCoinPage({Key? key, required this.coins}) : super(key: key);
 
@@ -22,8 +23,6 @@ class ConvertCoinPage extends StatefulWidget {
 class _ConvertCoinPageState extends State<ConvertCoinPage> {
   final List<ItemCoin> coins;
   ItemCoin? coin;
-  Color originalCoinColor = Colors.black12;
-  Color convertedCoinColor = Colors.transparent;
   String convertedSymbol = AppStrings.ETH;
   int currentIndex1 = 0;
   int currentIndex2 = 1;
@@ -34,7 +33,8 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
   _ConvertCoinPageState({required this.coins});
 
   void initBloc() async {
-    coinBloc = ConvertCoinBloc(convertCoinRepository: getIt.get<ConvertCoinRepository>());
+    coinBloc = ConvertCoinBloc(
+        convertCoinRepository: getIt.get<ConvertCoinRepository>());
   }
 
   @override
@@ -73,197 +73,43 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
             Padding(
               padding: const EdgeInsets.only(top: 14),
               child: GestureDetector(
-                child: Container(
-                    color: originalCoinColor,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 27, top: 16, bottom: 16),
-                          child: Row(
-                            children: [
-                              Image.network(
-                                coin!.image,
-                                width: 35,
-                                height: 35,
-                              ),
-                              InkWell(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 4),
-                                  child: Text(
-                                    coin!.symbol.toUpperCase(),
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                onTap: () {
-                                  List<Symbol> symbols = [];
-                                  for (int i = 0; i < coins.length; i++) {
-                                    symbols.add(
-                                        Symbol(coins[i].symbol, i == currentIndex1 ? true : false));
-                                  }
-                                  showCurrenciesDialog(symbols, false);
-                                },
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 4),
-                                child: Image.asset(
-                                  ImageAssetString.icDrop,
-                                  width: 9,
-                                  height: 7,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.only(right: 40),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  width: 50,
-                                  height: 30,
-                                  child: TextFormField(
-                                    decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                    ),
-                                    style:
-                                        const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
-                                    keyboardType: TextInputType.number,
-                                    onChanged: (text) {
-                                      if (text.isNotEmpty) {
-                                        numberBeforeConvert = text.contains(AppStrings.COMMA)
-                                            ? text.replaceAll(AppStrings.COMMA, AppStrings.DOT)
-                                            : text;
-                                        coinBloc?.add(ConvertCoinLoaded(coin!.id, convertedSymbol));
-                                      }
-                                    },
-                                  ),
-                                ),
-                                Text(
-                                  coin!.symbol.toUpperCase(),
-                                  style: const TextStyle(fontSize: 14),
-                                )
-                              ],
-                            ))
-                      ],
-                    )),
+                child: BlocBuilder<ConvertCoinBloc, ConvertCoinState>(
+                  builder: (context, state) {
+                    if (state is ConvertCoinSuccess) {
+                      return Container(
+                          color: (state.data as List<Color>).first, child: originalCurrencyView());
+                    }
+                    return Container(
+                        color: coinBloc?.originalCoinColor,
+                        child: originalCurrencyView());
+                  },
+                ),
                 onTap: () {
-                  setState(() {
-                    originalCoinColor = Colors.black12;
-                    convertedCoinColor = Colors.transparent;
-                  });
+                  coinBloc?.add(ChangeColorOfCoinField(
+                      AppColors.colorMystic, Colors.white));
                 },
               ),
             ),
             GestureDetector(
-              child: Container(
-                color: convertedCoinColor,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 27, top: 16, bottom: 16),
-                      child: Row(
-                        children: [
-                          Image.network(
-                            image!,
-                            width: 35,
-                            height: 35,
-                          ),
-                          InkWell(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 4),
-                              child: Text(
-                                convertedSymbol.toUpperCase(),
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            onTap: () {
-                              showCurrenciesDialog([], true);
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 4),
-                            child: Image.asset(
-                              ImageAssetString.icDrop,
-                              width: 9,
-                              height: 7,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.only(right: 40),
-                        child: Column(
-                          children: [
-                            BlocBuilder<ConvertCoinBloc, ConvertCoinState>(
-                              builder: (context, state) {
-                                if (state is ConvertCoinSuccess) {
-                                  double price = state.data as double;
-                                  double newPrice = double.parse(numberBeforeConvert) * price;
-                                  return Text(
-                                    newPrice.toStringAsFixed(2),
-                                    style:
-                                        const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                                  );
-                                } else if (state is ConvertCoinLoading) {
-                                  return const CircularProgressIndicator();
-                                } else {
-                                  return Text(
-                                    numberBeforeConvert,
-                                    style:
-                                        const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                                  );
-                                }
-                              },
-                            ),
-                            Text(
-                              convertedSymbol.toUpperCase(),
-                              style: const TextStyle(fontSize: 14),
-                            )
-                          ],
-                        ))
-                  ],
-                ),
+              child: BlocBuilder<ConvertCoinBloc, ConvertCoinState>(
+                builder: (context, state) {
+                  if (state is ConvertCoinSuccess) {
+                    return Container(
+                        color: (state.data as List<Color>)[1], child: originalCurrencyView());
+                  }
+                  return Container(
+                      color: coinBloc?.convertedCoinColor,
+                      child: originalCurrencyView());
+                },
               ),
               onTap: () {
-                setState(() {
-                  convertedCoinColor = Colors.black12;
-                  originalCoinColor = Colors.transparent;
-                });
+                coinBloc?.add(ChangeColorOfCoinField(
+                    AppColors.colorMystic, Colors.white));
               },
             )
           ],
         ),
       ),
-    );
-  }
-
-  Widget amountOfCurrency(double amount, String currency) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        TextField(
-          obscureText: true,
-          decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            labelText: amount.toString(),
-          ),
-        ),
-        Text(
-          currency,
-          style: const TextStyle( fontSize: 14),
-        ),
-      ],
     );
   }
 
@@ -278,12 +124,14 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
         context: context,
         builder: (BuildContext context) {
           return Dialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               child: dialogWidget);
         });
   }
 
-  void callBackUpdateCurrency(String currency, bool isOriginalCoin, int currentIndex2) {
+  void callBackUpdateCurrency(
+      String currency, bool isOriginalCoin, int currentIndex2) {
     setState(() {
       if (isOriginalCoin) {
         for (int i = 0; i < coins.length; i++) {
@@ -303,5 +151,168 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
         }
       }
     });
+  }
+
+  Widget originalCurrencyView() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 27, top: 16, bottom: 16),
+          child: Row(
+            children: [
+              Image.network(
+                coin!.image,
+                width: 35,
+                height: 35,
+              ),
+              InkWell(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 4),
+                  child: Text(
+                    coin!.symbol.toUpperCase(),
+                    style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                onTap: () {
+                  List<Symbol> symbols = [];
+                  for (int i = 0; i < coins.length; i++) {
+                    symbols.add(Symbol(
+                        coins[i].symbol, i == currentIndex1 ? true : false));
+                  }
+                  showCurrenciesDialog(symbols, false);
+                  coinBloc?.add(ChangeColorOfCoinField(
+                      AppColors.colorMystic, Colors.white));
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 4),
+                child: Image.asset(
+                  ImageAssetString.icDrop,
+                  width: 9,
+                  height: 7,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+            padding: const EdgeInsets.only(right: 40),
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 50,
+                  height: 30,
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                    ),
+                    style: const TextStyle(
+                        fontSize: 25, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
+                    onChanged: (text) {
+                      if (text.isNotEmpty) {
+                        numberBeforeConvert = text.contains(AppStrings.COMMA)
+                            ? text.replaceAll(AppStrings.COMMA, AppStrings.DOT)
+                            : text;
+                        coinBloc
+                            ?.add(ConvertCoinLoaded(coin!.id, convertedSymbol));
+                      }
+                    },
+                  ),
+                ),
+                Text(
+                  coin!.symbol.toUpperCase(),
+                  style: const TextStyle(fontSize: 14),
+                )
+              ],
+            ))
+      ],
+    );
+  }
+
+  Widget convertedCurrencyView() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 27, top: 16, bottom: 16),
+          child: Row(
+            children: [
+              Image.network(
+                image!,
+                width: 35,
+                height: 35,
+              ),
+              InkWell(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 4),
+                  child: Text(
+                    convertedSymbol.toUpperCase(),
+                    style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                onTap: () {
+                  showCurrenciesDialog([], true);
+                  coinBloc?.add(ChangeColorOfCoinField(
+                      AppColors.colorMystic, Colors.white));
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 4),
+                child: Image.asset(
+                  ImageAssetString.icDrop,
+                  width: 9,
+                  height: 7,
+                ),
+              )
+            ],
+          ),
+        ),
+        Padding(
+            padding: const EdgeInsets.only(right: 40),
+            child: Column(
+              children: [
+                BlocBuilder<ConvertCoinBloc, ConvertCoinState>(
+                  builder: (context, state) {
+                    if (state is ConvertCoinSuccess) {
+                      double price = state.data as double;
+                      double newPrice =
+                          double.parse(numberBeforeConvert) * price;
+                      return Text(
+                        newPrice.toStringAsFixed(2),
+                        style: const TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      );
+                    } else if (state is ConvertCoinLoading) {
+                      return const CircularProgressIndicator();
+                    } else {
+                      return Text(
+                        numberBeforeConvert,
+                        style: const TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      );
+                    }
+                  },
+                ),
+                Text(
+                  convertedSymbol.toUpperCase(),
+                  style: const TextStyle(fontSize: 14),
+                )
+              ],
+            ))
+      ],
+    );
   }
 }

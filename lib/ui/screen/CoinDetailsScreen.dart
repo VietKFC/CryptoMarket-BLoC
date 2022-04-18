@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interactive_chart/interactive_chart.dart';
+import 'package:intl/intl.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:url_launcher/link.dart';
 import 'package:vn_crypto/bloc/coin_details/coin_details_bloc.dart';
@@ -17,6 +18,7 @@ import 'package:vn_crypto/ultils/Constant.dart';
 
 class CoinDetailsScreen extends StatefulWidget {
   final ItemCoin coin;
+  static const String PAGE_ROUTE_NAME = "/coin_detail";
 
   const CoinDetailsScreen({required this.coin, Key? key}) : super(key: key);
 
@@ -26,6 +28,7 @@ class CoinDetailsScreen extends StatefulWidget {
 
 class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
   late Icon iconFollowing;
+  var currencyFormatter = NumberFormat.simpleCurrency();
 
   @override
   Widget build(BuildContext context) {
@@ -120,9 +123,7 @@ class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(AppStrings.textStatic,
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500)),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
         const SizedBox(height: 16),
         currentPriceAndAth(
             context: context,
@@ -158,9 +159,8 @@ class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
       {required double price, required double priceChangeRate}) {
     return Row(children: [
       Text(
-        '$price\$',
-        style: const TextStyle(
-            fontSize: 25, fontWeight: FontWeight.bold),
+        currencyFormatter.format(price),
+        style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
       ),
       Expanded(
           child: Container(
@@ -173,7 +173,8 @@ class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
   Widget athAndAthDate({required double ath, required String athDate}) {
     DateTime date = DateTime.parse(athDate);
     String formattedAthDate = '${date.day}/${date.month}/${date.year}';
-    return Text('${AppStrings.textAth}: $ath\$ ($formattedAthDate)',
+    return Text(
+        '${AppStrings.textAth}: ${currencyFormatter.format(ath)} ($formattedAthDate)',
         style: const TextStyle(fontSize: 12));
   }
 
@@ -250,12 +251,10 @@ class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(AppStrings.textMarketCap,
-            style: TextStyle(fontSize: 14)),
+        const Text(AppStrings.textMarketCap, style: TextStyle(fontSize: 14)),
         const SizedBox(height: 4),
-        Text('$marketCap\$',
-            style: const TextStyle(
-               fontSize: 14, fontWeight: FontWeight.bold))
+        Text(currencyFormatter.format(marketCap),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold))
       ],
     );
   }
@@ -265,8 +264,7 @@ class _CoinDetailsScreenState extends State<CoinDetailsScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(AppStrings.textURL,
-            style: TextStyle(fontSize: 14)),
+        const Text(AppStrings.textURL, style: TextStyle(fontSize: 14)),
         const SizedBox(height: 4),
         Link(
             uri: Uri.tryParse(url),

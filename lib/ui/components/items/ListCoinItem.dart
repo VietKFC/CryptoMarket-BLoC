@@ -22,7 +22,6 @@ class _ListCoinItemState extends State<ListCoinItem> {
   Widget build(BuildContext context) {
     iconFollowingString =
         widget.coin.isFollowing ? ImageAssetString.icFollowing : ImageAssetString.icUnFollowing;
-    print('isFollowing ${widget.coin.isFollowing}');
     return Container(
       color: Colors.transparent,
       child: Column(

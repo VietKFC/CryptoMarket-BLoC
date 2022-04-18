@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:vn_crypto/data/model/category.dart';
 import 'package:vn_crypto/ultils/Constant.dart';
 
@@ -14,6 +15,7 @@ class CategoryItem extends StatefulWidget {
 
 class CategoryItemState extends State<CategoryItem> {
   final Category category;
+  var currencyFormatter = NumberFormat.simpleCurrency();
 
   CategoryItemState(this.category);
 
@@ -32,13 +34,13 @@ class CategoryItemState extends State<CategoryItem> {
               child: Text(
                 category.name,
                 style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 13, top: 14),
               child: Text(
-                "${AppStrings.textMarketCapFull}${category.marketCap}",
+                "${AppStrings.textMarketCapFull}${currencyFormatter.format(category.marketCap)}",
                 style: const TextStyle(
                     fontSize: 14, fontWeight: FontWeight.normal),
               ),
@@ -46,7 +48,7 @@ class CategoryItemState extends State<CategoryItem> {
             Padding(
               padding: const EdgeInsets.only(left: 13),
               child: Text(
-                "${AppStrings.textVolume24h}${category.volume}",
+                "${AppStrings.textVolume24h}${currencyFormatter.format(category.volume)}",
                 style: const TextStyle(
                     fontSize: 14, fontWeight: FontWeight.normal),
               ),

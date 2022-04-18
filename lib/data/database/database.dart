@@ -1,7 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:vn_crypto/data/model/coin_local.dart';
-import 'package:vn_crypto/data/model/item_coin.dart';
+import 'package:vn_crypto/data/model/invest.dart';
 
 const String DB_NAME = "vncrypto_db";
 const String FOLLOWING_TABLE = "following";
@@ -33,11 +33,9 @@ class DatabaseProvider {
             id String PRIMARY KEY,
             name TEXT,
             symbol TEXT,
+            image TEXT,
             current_price REAL,
-            market_cap REAL,
-            market_cap_rank INT,
-            price_change_percent REAL,
-            image TEXT
+            amount REAL
       )""");
       },
     );
@@ -51,19 +49,12 @@ class DatabaseProvider {
     });
   }
 
-  Future<List<ItemCoin>> getAllInvests() async {
+  Future<List<Invest>> getAllInvests() async {
     final db = await database;
     List<Map<String, dynamic>> maps = await db.query(INVEST_TABLE);
     return List.generate(maps.length, (index) {
-      return ItemCoin(
-          maps[index]["id"],
-          maps[index]["name"],
-          maps[index]["symbol"],
-          maps[index]["current_price"],
-          maps[index]["market_cap"],
-          maps[index]["market_cap_rank"],
-          maps[index]["price_change_percent"],
-          maps[index]["image"]);
+      return Invest(maps[index]["id"], maps[index]["name"], maps[index]["symbol"],
+          maps[index]["image"], maps[index]["current_price"], maps[index]["amount"]);
     });
   }
 
@@ -73,9 +64,9 @@ class DatabaseProvider {
         conflictAlgorithm: ConflictAlgorithm.ignore);
   }
 
-  Future<int> insertInvest(ItemCoin itemCoin) async {
+  Future<int> insertInvest(Invest invest) async {
     final db = await database;
-    return await db.insert(INVEST_TABLE, itemCoin.toJson(),
+    return await db.insert(INVEST_TABLE, invest.toJson(),
         conflictAlgorithm: ConflictAlgorithm.ignore);
   }
 
@@ -84,9 +75,14 @@ class DatabaseProvider {
     return await db.delete(FOLLOWING_TABLE, where: "id = ?", whereArgs: [coinId]);
   }
 
-  Future<int> deleteInvest(ItemCoin itemCoin) async {
+  Future<int> deleteInvest(Invest itemCoin) async {
     final db = await database;
     return await db.delete(INVEST_TABLE, where: "id = ?", whereArgs: [itemCoin.id]);
+  }
+
+  Future<void> updateInvest(Invest invest) async {
+    final db = await database;
+    db.update(INVEST_TABLE, invest.toJson(), where: "id = ?", whereArgs: [invest.id]);
   }
 
   Future close() {

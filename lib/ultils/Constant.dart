@@ -20,6 +20,7 @@ class AppStrings {
   static const String messageDeleteInvestSuccess = "Invest is removed!";
   static const String yourAssets = "Your Assets:";
   static const String addNewAsset = "Add New Asset";
+  static const String add = "Add";
 
   static const String titleListTopCoin = "List Top Coins";
   static const String titleFollowingCoin = "Following Coins";
@@ -30,8 +31,8 @@ class AppStrings {
   static const String rankCoin = "Rank #";
   static const String rankTrendingCoin = "#";
   static const String scoreCoin = "Score: ";
-  static const String textMarketCapFull = "Market cap: \$";
-  static const String textVolume24h = "Volume(24h): \$";
+  static const String textMarketCapFull = "Market cap: ";
+  static const String textVolume24h = "Volume(24h): ";
   static const String defiMarketCap = "Defi Market Cap: ";
   static const String ethMarketCap = "Eth Market Cap: ";
   static const String tradingVolume = "Trading Volume(24h): ";
@@ -60,6 +61,7 @@ class ImageAssetString {
   static const String icSearch = 'assets/images/ic_search.png';
   static const String icChecked = 'assets/images/ic_checked_blue.png';
   static const String icExpand = 'assets/images/ic_expand.png';
+  static const String icConvert = 'assets/images/ic_convert.png';
 
   static const String icFollowing = 'assets/images/ic_follow.svg';
   static const String icUnFollowing = 'assets/images/ic_un_follow.svg';
@@ -74,6 +76,7 @@ class AppColors {
   static const int colorMountainMeadow = 0xFF17C784;
   static const int colorSliver = 0xFFBCB9B9;
   static const int colorWildSand = 0xFFF5F5F5;
+  static const int colorSilver = 0xFFC4C4C4;
 
   static const Color colorMystic = Color.fromRGBO(224, 227, 237, 1);
   static const Color colorConcrete = Color.fromRGBO(242, 242, 242, 1);

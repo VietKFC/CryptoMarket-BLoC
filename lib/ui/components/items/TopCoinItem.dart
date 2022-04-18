@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:vn_crypto/data/model/item_coin.dart';
 import 'package:vn_crypto/ui/components/common/price_change.dart';
 import 'package:vn_crypto/ui/screen/CoinDetailsScreen.dart';
@@ -15,6 +16,7 @@ class TopCoinItem extends StatefulWidget {
 
 class TopCoinItemState extends State<TopCoinItem> {
   final ItemCoin itemCoin;
+  var currencyFormatter = NumberFormat.simpleCurrency();
 
   TopCoinItemState(this.itemCoin);
 
@@ -27,27 +29,31 @@ class TopCoinItemState extends State<TopCoinItem> {
           width: 128,
           height: 128,
           child: Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [Expanded(child: coinImageView()), Expanded(child: rankView())],
+                    children: [
+                      Expanded(child: coinImageView()),
+                      Expanded(child: rankView())
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 12),
                     child: Text(
                       itemCoin.name,
                       style: const TextStyle(
-                          fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
+                          fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 12),
                     child: Text(
-                      "\$${itemCoin.curerentPrice.toString()}",
-                      style: const TextStyle(color: Colors.black, fontSize: 14),
+                      currencyFormatter.format(itemCoin.curerentPrice),
+                      style: const TextStyle(fontSize: 14),
                     ),
                   ),
                   Padding(
@@ -58,8 +64,8 @@ class TopCoinItemState extends State<TopCoinItem> {
               )),
         ),
         onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => CoinDetailsScreen(coin: itemCoin)));
+          Navigator.pushNamed(context, CoinDetailsScreen.PAGE_ROUTE_NAME,
+              arguments: itemCoin);
         },
       ),
     );
@@ -81,8 +87,10 @@ class TopCoinItemState extends State<TopCoinItem> {
           ),
           Text(
             "${AppStrings.rankCoin}${itemCoin.rank.toString()}",
-            style:
-                const TextStyle(fontSize: 11, fontWeight: FontWeight.normal, color: Colors.white),
+            style: const TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.normal,
+                color: Colors.white),
           )
         ],
       ),

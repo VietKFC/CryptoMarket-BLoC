@@ -70,11 +70,8 @@ class ListCoinScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         return InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          CoinDetailsScreen(coin: list[index])));
+              Navigator.pushNamed(context, CoinDetailsScreen.PAGE_ROUTE_NAME,
+                  arguments: list[index]);
             },
             child: ListCoinItem(
                 coin: list[index],
@@ -89,9 +86,8 @@ class ListCoinScreen extends StatelessWidget {
   }
 
   _onFollowingClick({var context, required ItemCoin coin}) {
-    if(coin.isFollowing) {
-      BlocProvider.of<ListCoinBloc>(context)
-          .add(UnFollowingCoin(coin.id));
+    if (coin.isFollowing) {
+      BlocProvider.of<ListCoinBloc>(context).add(UnFollowingCoin(coin.id));
       coin.isFollowing = false;
     } else {
       BlocProvider.of<ListCoinBloc>(context)

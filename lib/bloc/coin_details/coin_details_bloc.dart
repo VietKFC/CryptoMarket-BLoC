@@ -22,12 +22,12 @@ class CoinDetailsBloc extends Bloc<CoinDetailsEvent, CoinDetailsState> {
   void _onGetCoin(var event, var emit) async {
     String coinId = (event as CoinDetailsLoaded).coinId;
     emit(CoinDetailsLoading());
-    CoinDetails coin =
-        await coinRepository.getCoin(coinId);
-    List<CandleData> candleDatas = await coinRepository.getCoinOhlc(coinId, AppStrings.textCurrency, Constant.defaultDays);
+    CoinDetails coin = await coinRepository.getCoin(coinId);
+    List<CandleData> candleDatas =
+        await coinRepository.getCoinOhlc(coinId, AppStrings.textCurrency, Constant.defaultDays);
     List<CoinLocal> followingCoins = await followRepository.getFollowingCoins();
-    for(var followingCoin in followingCoins) {
-      if(followingCoin.coinId == coin.id) coin.isFollowing = true;
+    for (var followingCoin in followingCoins) {
+      if (followingCoin.coinId == coin.id) coin.isFollowing = true;
     }
     if (coin == null) {
       emit(CoinDetailsLoadFailed(AppStrings.errorLoadDataFailed));

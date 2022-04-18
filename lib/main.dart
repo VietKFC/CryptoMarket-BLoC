@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vn_crypto/bloc/theme/theme_bloc.dart';
-import 'package:vn_crypto/bloc/theme/theme_event.dart';
 import 'package:vn_crypto/bloc/theme/theme_state.dart';
 import 'package:vn_crypto/di/dependency_injection.dart';
 import 'package:vn_crypto/ui/components/BottomNav.dart';
+import 'package:vn_crypto/ui/components/route/AppRoute.dart';
 import 'package:vn_crypto/ui/home/home_page.dart';
-import 'package:vn_crypto/ui/investmanagement/invest_management.dart';
+import 'package:vn_crypto/ui/investmanagement/invest_management_page.dart';
 import 'package:vn_crypto/ui/screen/ListCoinScreen.dart';
 import 'package:vn_crypto/ui/screen/about_app_screen.dart';
 
@@ -47,23 +47,26 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: IndexedStack(
-          index: _selectedIndex,
-          children: const [
-            HomePage(),
-            ListCoinScreen(),
-            InvestManagementScreen(),
-            AboutAppScreen()
-          ],
-        ),
-        bottomNavigationBar: BottomNav(
-          onTap: (int i) {
-            setState(() {
-              _selectedIndex = i;
-            });
-          },
-          selectedIndex: _selectedIndex,
-        ));
+    return MaterialApp(
+      home: Scaffold(
+          body: IndexedStack(
+            index: _selectedIndex,
+            children: const [
+              HomePage(),
+              ListCoinScreen(),
+              InvestManagementScreen(),
+              AboutAppScreen()
+            ],
+          ),
+          bottomNavigationBar: BottomNav(
+            onTap: (int i) {
+              setState(() {
+                _selectedIndex = i;
+              });
+            },
+            selectedIndex: _selectedIndex,
+          )),
+      onGenerateRoute: appRoutes,
+    );
   }
 }

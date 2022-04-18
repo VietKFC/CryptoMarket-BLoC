@@ -13,6 +13,8 @@ import 'package:vn_crypto/ui/screen/CoinDetailsScreen.dart';
 import 'package:vn_crypto/ultils/Constant.dart';
 
 class FollowingCoinsScreen extends StatelessWidget {
+  static const String PAGE_ROUTE_NAME = "/following_coin";
+
   const FollowingCoinsScreen({Key? key}) : super(key: key);
 
   @override
@@ -68,11 +70,8 @@ class FollowingCoinsScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         return InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          CoinDetailsScreen(coin: list[index])));
+              Navigator.pushNamed(context, CoinDetailsScreen.PAGE_ROUTE_NAME,
+                  arguments: list[index]);
             },
             child: ListCoinItem(
                 coin: list[index],

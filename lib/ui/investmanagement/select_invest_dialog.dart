@@ -9,14 +9,16 @@ import 'package:vn_crypto/di/dependency_injection.dart';
 import 'package:vn_crypto/ui/components/common/CoinSearchBarSymbol.dart';
 import 'package:vn_crypto/ultils/Constant.dart';
 
-class AddInvestDialog extends StatefulWidget {
-  const AddInvestDialog({Key? key}) : super(key: key);
+class SelectInvestDialog extends StatefulWidget {
+  final Function callback;
+
+  const SelectInvestDialog({Key? key, required this.callback}) : super(key: key);
 
   @override
-  _AddInvestDialogState createState() => _AddInvestDialogState();
+  _SelectInvestDialogState createState() => _SelectInvestDialogState();
 }
 
-class _AddInvestDialogState extends State<AddInvestDialog> {
+class _SelectInvestDialogState extends State<SelectInvestDialog> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -55,48 +57,17 @@ class _AddInvestDialogState extends State<AddInvestDialog> {
                       return ListView.builder(
                           itemCount: itemCoins.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(color: Colors.black.withOpacity(0.2))),
-                              ),
-                              child: GestureDetector(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 16),
-                                          child: Image.network(
-                                            itemCoins[index].image,
-                                            width: 22,
-                                            height: 22,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 10, top: 20, bottom: 20),
-                                          child: Text(
-                                            itemCoins[index].symbol.toUpperCase(),
-                                            style:
-                                                const TextStyle(fontSize: 16, color: Colors.black),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 16),
-                                      child: Image.asset(
-                                        ImageAssetString.icExpand,
-                                        width: 13,
-                                        height: 15,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                onTap: () {},
-                              ),
+                            return GestureDetector(
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(color: Colors.black.withOpacity(0.2))),
+                                  ),
+                                  child: itemInvest(itemCoins[index])),
+                              onTap: () {
+                                Navigator.of(context).pop(true);
+                                widget.callback(itemCoins[index]);
+                              },
                             );
                           });
                     } else if (state is InvestManagementLoading) {
@@ -112,6 +83,41 @@ class _AddInvestDialogState extends State<AddInvestDialog> {
           )
         ],
       ),
+    );
+  }
+
+  Widget itemInvest(ItemCoin itemCoin) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Image.network(
+                itemCoin.image,
+                width: 22,
+                height: 22,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, top: 20, bottom: 20),
+              child: Text(
+                itemCoin.symbol.toUpperCase(),
+                style: const TextStyle(fontSize: 16, color: Colors.black),
+              ),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 16),
+          child: Image.asset(
+            ImageAssetString.icExpand,
+            width: 13,
+            height: 15,
+          ),
+        )
+      ],
     );
   }
 }

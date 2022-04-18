@@ -27,13 +27,17 @@ class TrendingCoinItemState extends State<TrendingCoinItem> {
           width: 128,
           height: 128,
           child: Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [Expanded(child: coinImageView()), Expanded(child: rankView())],
+                    children: [
+                      Expanded(child: coinImageView()),
+                      Expanded(child: rankView())
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 12),
@@ -42,7 +46,7 @@ class TrendingCoinItemState extends State<TrendingCoinItem> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                          fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
+                          fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Padding(
@@ -50,7 +54,7 @@ class TrendingCoinItemState extends State<TrendingCoinItem> {
                     child: Text(
                       "(${itemCoin.symbol})",
                       style: const TextStyle(
-                          fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
+                          fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Padding(
@@ -58,19 +62,18 @@ class TrendingCoinItemState extends State<TrendingCoinItem> {
                     child: Text(
                       "${AppStrings.scoreCoin}${itemCoin.score}",
                       style: const TextStyle(
-                          fontSize: 12, color: Colors.grey, fontWeight: FontWeight.normal),
+                          fontSize: 12,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.normal),
                     ),
                   )
                 ],
               )),
         ),
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => CoinDetailsScreen(
-                      coin: ItemCoin(itemCoin.id, itemCoin.name, itemCoin.symbol, 0.0, 0.0,
-                          itemCoin.rank, 0.0, itemCoin.thumb))));
+          Navigator.pushNamed(context, CoinDetailsScreen.PAGE_ROUTE_NAME,
+              arguments: ItemCoin(itemCoin.id, itemCoin.name, itemCoin.symbol,
+                  0.0, 0.0, itemCoin.rank, 0.0, itemCoin.thumb));
         },
       ),
     );
@@ -92,8 +95,10 @@ class TrendingCoinItemState extends State<TrendingCoinItem> {
           ),
           Text(
             "${AppStrings.rankTrendingCoin}${itemCoin.rank.toString()}",
-            style:
-                const TextStyle(fontSize: 11, fontWeight: FontWeight.normal, color: Colors.white),
+            style: const TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.normal,
+                color: Colors.white),
           )
         ],
       ),

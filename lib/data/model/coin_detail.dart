@@ -23,9 +23,8 @@ class CoinDetails {
   int marketCapRank;
   bool isFollowing = false;
 
-  CoinDetails(this.id, this.symbol, this.name, this.links, this.image,
-      this.marketData, this.marketCapRank);
+  CoinDetails(this.id, this.symbol, this.name, this.links, this.image, this.marketData,
+      this.marketCapRank);
 
-  factory CoinDetails.fromJson(Map<String, dynamic> json) =>
-      _$CoinDetailsFromJson(json);
+  factory CoinDetails.fromJson(Map<String, dynamic> json) => _$CoinDetailsFromJson(json);
 }

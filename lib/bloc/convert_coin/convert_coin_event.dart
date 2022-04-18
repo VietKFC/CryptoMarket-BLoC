@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 abstract class ConvertCoinEvent extends Equatable {
   @override
@@ -14,4 +15,11 @@ class ConvertCoinLoaded extends ConvertCoinEvent {
   final String currency;
 
   ConvertCoinLoaded(this.id, this.currency);
+}
+
+class ChangeColorOfCoinField extends ConvertCoinEvent {
+  final Color originalColor;
+  final Color convertedColor;
+
+  ChangeColorOfCoinField(this.originalColor, this.convertedColor);
 }

@@ -45,7 +45,7 @@ class _DialogWidgetState extends State<DialogWidget> {
                     ..add(SupportedCoinsLoaded()),
               child: BlocBuilder<ConvertCoinBloc, ConvertCoinState>(
                 builder: (context, state) {
-                  if (state is ConvertCoinSuccess) {
+                  if (state is ShowCoinSuccess) {
                     List<Symbol> symbols = [];
                     List<String> supportedSymbols = state.data as List<String>;
                     for (int i = 0; i < supportedSymbols.length; i++) {

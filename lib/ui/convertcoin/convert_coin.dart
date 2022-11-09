@@ -72,12 +72,13 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 14),
-              child: GestureDetector(
+              child: InkWell(
                 child: BlocBuilder<ConvertCoinBloc, ConvertCoinState>(
                   builder: (context, state) {
-                    if (state is ConvertCoinSuccess) {
+                    if (state is ChangeColorSuccess) {
                       return Container(
-                          color: (state.data as List<Color>).first, child: originalCurrencyView());
+                          color: (state.data as List<Color>).first,
+                          child: originalCurrencyView());
                     }
                     return Container(
                         color: coinBloc?.originalCoinColor,
@@ -90,21 +91,22 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
                 },
               ),
             ),
-            GestureDetector(
+            InkWell(
               child: BlocBuilder<ConvertCoinBloc, ConvertCoinState>(
                 builder: (context, state) {
-                  if (state is ConvertCoinSuccess) {
+                  if (state is ChangeColorSuccess) {
                     return Container(
-                        color: (state.data as List<Color>)[1], child: originalCurrencyView());
+                        color: (state.data as List<Color>)[1],
+                        child: convertedCurrencyView());
                   }
                   return Container(
                       color: coinBloc?.convertedCoinColor,
-                      child: originalCurrencyView());
+                      child: convertedCurrencyView());
                 },
               ),
               onTap: () {
                 coinBloc?.add(ChangeColorOfCoinField(
-                    AppColors.colorMystic, Colors.white));
+                    Colors.white, AppColors.colorMystic));
               },
             )
           ],

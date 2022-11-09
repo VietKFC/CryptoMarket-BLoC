@@ -34,7 +34,7 @@ class CategoryItemState extends State<CategoryItem> {
               child: Text(
                 category.name,
                 style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(

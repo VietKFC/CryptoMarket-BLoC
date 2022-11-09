@@ -19,7 +19,8 @@ class Api {
   final Dio dio;
 
   Future<List<ItemCoin>> getCoins(String currency) async {
-    final response = await dio.get(Url.GET_COINS_URL, queryParameters: {'vs_currency': currency});
+    final response = await dio
+        .get(Url.GET_COINS_URL, queryParameters: {'vs_currency': currency});
     List<ItemCoin> itemCoins = [];
     List<dynamic> itemCoinsReponse = response.data as List;
     for (int i = 0; i < itemCoinsReponse.length; i++) {
@@ -60,7 +61,8 @@ class Api {
     return CoinDetails.fromJson(response.data);
   }
 
-  Future<List<CandleData>> getCoinOhlc(String coinId, String currency, int days) async {
+  Future<List<CandleData>> getCoinOhlc(
+      String coinId, String currency, int days) async {
     final response = await dio.get('${Url.GET_COIN_DETAILS_URL}/$coinId/ohlc',
         queryParameters: {'vs_currency': currency, 'days': days});
     List<CandleData> candleDatas = [];
@@ -88,8 +90,8 @@ class Api {
   }
 
   Future<double> getPriceConverted(String id, String currency) async {
-    final response =
-        await dio.get(Url.CONVERT_PRICE, queryParameters: {'ids': id, 'vs_currencies': currency});
+    final response = await dio.get(Url.CONVERT_PRICE,
+        queryParameters: {'ids': id, 'vs_currencies': currency});
     return response.data[id][currency] as double;
   }
 }

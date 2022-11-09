@@ -19,20 +19,7 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-        create: (_) => ThemeBloc(),
-        child: BlocBuilder<ThemeBloc, ThemeState>(
-            builder: (context, state) => MaterialApp(
-                  theme: ThemeData(
-                      brightness: state is DarkThemeState
-                          ? Brightness.dark
-                          : Brightness.light,
-                      primaryColor: Colors.white,
-                      appBarTheme: const AppBarTheme(color: Colors.white)),
-                  debugShowCheckedModeBanner: false,
-                  home: const MainScreen(),
-                )),
-      );
+  Widget build(BuildContext context) => const MainScreen();
 }
 
 class MainScreen extends StatefulWidget {
@@ -47,26 +34,36 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-          body: IndexedStack(
-            index: _selectedIndex,
-            children: const [
-              HomePage(),
-              ListCoinScreen(),
-              InvestManagementScreen(),
-              AboutAppScreen()
-            ],
-          ),
-          bottomNavigationBar: BottomNav(
-            onTap: (int i) {
-              setState(() {
-                _selectedIndex = i;
-              });
-            },
-            selectedIndex: _selectedIndex,
-          )),
-      onGenerateRoute: appRoutes,
+    return BlocProvider(
+      create: (_) => ThemeBloc(),
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) => MaterialApp(
+          theme: ThemeData(
+              brightness:
+                  state is DarkThemeState ? Brightness.dark : Brightness.light,
+              primaryColor: Colors.white,
+              appBarTheme: const AppBarTheme(color: Colors.white)),
+          home: Scaffold(
+              body: IndexedStack(
+                index: _selectedIndex,
+                children: const [
+                  HomePage(),
+                  ListCoinScreen(),
+                  InvestManagementScreen(),
+                  AboutAppScreen()
+                ],
+              ),
+              bottomNavigationBar: BottomNav(
+                onTap: (int i) {
+                  setState(() {
+                    _selectedIndex = i;
+                  });
+                },
+                selectedIndex: _selectedIndex,
+              )),
+          onGenerateRoute: appRoutes,
+        ),
+      ),
     );
   }
 }

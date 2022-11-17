@@ -1,5 +1,6 @@
 # VNCrypto
-VietNH
+Made by VietNH
+
 Technologies:
 
 BLoC 8.0.0

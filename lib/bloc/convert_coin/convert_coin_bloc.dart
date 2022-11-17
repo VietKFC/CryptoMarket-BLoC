@@ -10,11 +10,10 @@ class ConvertCoinBloc extends Bloc<ConvertCoinEvent, ConvertCoinState> {
   Color originalCoinColor = AppColors.colorMystic;
   Color convertedCoinColor = Colors.white;
 
-  ConvertCoinBloc({required this.convertCoinRepository})
-      : super(ConvertCoinInitialize()) {
+  ConvertCoinBloc({required this.convertCoinRepository}) : super(ConvertCoinInitialize()) {
     on<ConvertCoinLoaded>((event, _) => _onGetPriceConvertedData(event));
-    on<SupportedCoinsLoaded>((event, emit) => _onGetSupportedCurrenciesData());
-    on<ChangeColorOfCoinField>((event, emit) => _onChangeCoinFieldColor(event));
+    on<SupportedCoinsLoaded>((event, _) => _onGetSupportedCurrenciesData());
+    on<ChangeColorOfCoinField>((event, _) => _onChangeCoinFieldColor(event));
   }
 
   void _onChangeCoinFieldColor(ConvertCoinEvent event) {
@@ -25,8 +24,7 @@ class ConvertCoinBloc extends Bloc<ConvertCoinEvent, ConvertCoinState> {
 
   void _onGetSupportedCurrenciesData() async {
     emit(ConvertCoinLoading());
-    List<String> currencies =
-        await convertCoinRepository.getSupportedCurrencies();
+    List<String> currencies = await convertCoinRepository.getSupportedCurrencies();
     if (currencies.isNotEmpty) {
       emit(ShowCoinSuccess(data: currencies));
     } else {
@@ -37,11 +35,13 @@ class ConvertCoinBloc extends Bloc<ConvertCoinEvent, ConvertCoinState> {
   void _onGetPriceConvertedData(ConvertCoinEvent event) async {
     String id = (event as ConvertCoinLoaded).id;
     String currency = event.currency;
+    double numberBeforeConvert = event.numberBeforeConvert;
     emit(ConvertCoinLoading());
     double price = await convertCoinRepository.getPriceConverted(id, currency);
-    if (price != null) {
-      emit(ConvertCoinSuccess(data: price));
-    } else {
+    try {
+      double result = price * numberBeforeConvert;
+      emit(ConvertCoinSuccess(data: result));
+    } catch (e) {
       emit(ConvertCoinLoadFailed(error: AppStrings.errorConvertCoin));
     }
   }

@@ -35,7 +35,10 @@ class DatabaseProvider {
             symbol TEXT,
             image TEXT,
             current_price REAL,
-            amount REAL
+            amount REAL,
+            market_cap REAL,
+            market_cap_rank INTEGER,
+            price_change_percentage_24h REAL
       )""");
       },
     );
@@ -53,21 +56,27 @@ class DatabaseProvider {
     final db = await database;
     List<Map<String, dynamic>> maps = await db.query(INVEST_TABLE);
     return List.generate(maps.length, (index) {
-      return Invest(maps[index]["id"], maps[index]["name"], maps[index]["symbol"],
-          maps[index]["image"], maps[index]["current_price"], maps[index]["amount"]);
+      return Invest(
+          maps[index]["id"],
+          maps[index]["name"],
+          maps[index]["symbol"],
+          maps[index]["image"],
+          maps[index]["current_price"],
+          maps[index]["amount"],
+          maps[index]["market_cap"],
+          maps[index]["market_cap_rank"],
+          maps[index]["price_change_percentage_24h"]);
     });
   }
 
   Future<int> insertCoin(CoinLocal coin) async {
     final db = await database;
-    return await db.insert(FOLLOWING_TABLE, coin.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.ignore);
+    return await db.insert(FOLLOWING_TABLE, coin.toJson(), conflictAlgorithm: ConflictAlgorithm.ignore);
   }
 
   Future<int> insertInvest(Invest invest) async {
     final db = await database;
-    return await db.insert(INVEST_TABLE, invest.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.ignore);
+    return await db.insert(INVEST_TABLE, invest.toJson(), conflictAlgorithm: ConflictAlgorithm.ignore);
   }
 
   Future<int> deleteCoin(String coinId) async {

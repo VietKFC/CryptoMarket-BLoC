@@ -38,8 +38,8 @@ class _SelectInvestDialogState extends State<SelectInvestDialog> {
             padding: const EdgeInsets.only(top: 20),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-                Padding(
+              children: [
+                const Padding(
                   padding: EdgeInsets.only(left: 23, right: 23),
                   child: Icon(Icons.search, size: 24),
                 ),
@@ -60,8 +60,7 @@ class _SelectInvestDialogState extends State<SelectInvestDialog> {
                             return GestureDetector(
                               child: Container(
                                   decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(color: Colors.black.withOpacity(0.2))),
+                                    border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2))),
                                   ),
                                   child: itemInvest(itemCoins[index])),
                               onTap: () {

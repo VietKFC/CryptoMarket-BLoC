@@ -13,8 +13,9 @@ class SupportedCoinsLoaded extends ConvertCoinEvent {
 class ConvertCoinLoaded extends ConvertCoinEvent {
   final String id;
   final String currency;
+  final double numberBeforeConvert;
 
-  ConvertCoinLoaded(this.id, this.currency);
+  ConvertCoinLoaded(this.id, this.currency, this.numberBeforeConvert);
 }
 
 class ChangeColorOfCoinField extends ConvertCoinEvent {

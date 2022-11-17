@@ -33,8 +33,7 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
   _ConvertCoinPageState({required this.coins});
 
   void initBloc() async {
-    coinBloc = ConvertCoinBloc(
-        convertCoinRepository: getIt.get<ConvertCoinRepository>());
+    coinBloc = ConvertCoinBloc(convertCoinRepository: getIt.get<ConvertCoinRepository>());
   }
 
   @override
@@ -57,8 +56,7 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
         appBar: AppBar(
             elevation: 0,
             title: const Text(AppStrings.converter,
-                textDirection: TextDirection.ltr,
-                style: TextStyle(color: Colors.black, fontSize: 24)),
+                textDirection: TextDirection.ltr, style: TextStyle(color: Colors.black, fontSize: 24)),
             leading: IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios,
@@ -76,18 +74,13 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
                 child: BlocBuilder<ConvertCoinBloc, ConvertCoinState>(
                   builder: (context, state) {
                     if (state is ChangeColorSuccess) {
-                      return Container(
-                          color: (state.data as List<Color>).first,
-                          child: originalCurrencyView());
+                      return Container(color: (state.data as List<Color>).first, child: originalCurrencyView());
                     }
-                    return Container(
-                        color: coinBloc?.originalCoinColor,
-                        child: originalCurrencyView());
+                    return Container(color: coinBloc?.originalCoinColor, child: originalCurrencyView());
                   },
                 ),
                 onTap: () {
-                  coinBloc?.add(ChangeColorOfCoinField(
-                      AppColors.colorMystic, Colors.white));
+                  coinBloc?.add(ChangeColorOfCoinField(AppColors.colorMystic, Colors.white));
                 },
               ),
             ),
@@ -95,18 +88,13 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
               child: BlocBuilder<ConvertCoinBloc, ConvertCoinState>(
                 builder: (context, state) {
                   if (state is ChangeColorSuccess) {
-                    return Container(
-                        color: (state.data as List<Color>)[1],
-                        child: convertedCurrencyView());
+                    return Container(color: (state.data as List<Color>)[1], child: convertedCurrencyView());
                   }
-                  return Container(
-                      color: coinBloc?.convertedCoinColor,
-                      child: convertedCurrencyView());
+                  return Container(color: coinBloc?.convertedCoinColor, child: convertedCurrencyView());
                 },
               ),
               onTap: () {
-                coinBloc?.add(ChangeColorOfCoinField(
-                    Colors.white, AppColors.colorMystic));
+                coinBloc?.add(ChangeColorOfCoinField(Colors.white, AppColors.colorMystic));
               },
             )
           ],
@@ -125,15 +113,11 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Dialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: dialogWidget);
+          return Dialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)), child: dialogWidget);
         });
   }
 
-  void callBackUpdateCurrency(
-      String currency, bool isOriginalCoin, int currentIndex2) {
+  void callBackUpdateCurrency(String currency, bool isOriginalCoin, int currentIndex2) {
     setState(() {
       if (isOriginalCoin) {
         for (int i = 0; i < coins.length; i++) {
@@ -152,6 +136,7 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
           }
         }
       }
+      coinBloc?.add(ConvertCoinLoaded(coin!.id, convertedSymbol, double.parse(numberBeforeConvert)));
     });
   }
 
@@ -173,21 +158,16 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
                   padding: const EdgeInsets.only(left: 4),
                   child: Text(
                     coin!.symbol.toUpperCase(),
-                    style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                 ),
                 onTap: () {
                   List<Symbol> symbols = [];
                   for (int i = 0; i < coins.length; i++) {
-                    symbols.add(Symbol(
-                        coins[i].symbol, i == currentIndex1 ? true : false));
+                    symbols.add(Symbol(coins[i].symbol, i == currentIndex1 ? true : false));
                   }
                   showCurrenciesDialog(symbols, false);
-                  coinBloc?.add(ChangeColorOfCoinField(
-                      AppColors.colorMystic, Colors.white));
+                  coinBloc?.add(ChangeColorOfCoinField(AppColors.colorMystic, Colors.white));
                 },
               ),
               Padding(
@@ -216,17 +196,14 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
                     ),
-                    style: const TextStyle(
-                        fontSize: 25, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.number,
                     onChanged: (text) {
                       if (text.isNotEmpty) {
-                        numberBeforeConvert = text.contains(AppStrings.COMMA)
-                            ? text.replaceAll(AppStrings.COMMA, AppStrings.DOT)
-                            : text;
-                        coinBloc
-                            ?.add(ConvertCoinLoaded(coin!.id, convertedSymbol));
+                        numberBeforeConvert =
+                            text.contains(AppStrings.COMMA) ? text.replaceAll(AppStrings.COMMA, AppStrings.DOT) : text;
+                        coinBloc?.add(ConvertCoinLoaded(coin!.id, convertedSymbol, double.parse(numberBeforeConvert)));
                       }
                     },
                   ),
@@ -259,16 +236,12 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
                   padding: const EdgeInsets.only(left: 4),
                   child: Text(
                     convertedSymbol.toUpperCase(),
-                    style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                 ),
                 onTap: () {
                   showCurrenciesDialog([], true);
-                  coinBloc?.add(ChangeColorOfCoinField(
-                      AppColors.colorMystic, Colors.white));
+                  coinBloc?.add(ChangeColorOfCoinField(AppColors.colorMystic, Colors.white));
                 },
               ),
               Padding(
@@ -289,21 +262,17 @@ class _ConvertCoinPageState extends State<ConvertCoinPage> {
                 BlocBuilder<ConvertCoinBloc, ConvertCoinState>(
                   builder: (context, state) {
                     if (state is ConvertCoinSuccess) {
-                      double price = state.data as double;
-                      double newPrice =
-                          double.parse(numberBeforeConvert) * price;
+                      double result = state.data as double;
                       return Text(
-                        newPrice.toStringAsFixed(2),
-                        style: const TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                        result.toStringAsFixed(2),
+                        style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                       );
                     } else if (state is ConvertCoinLoading) {
                       return const CircularProgressIndicator();
                     } else {
                       return Text(
                         numberBeforeConvert,
-                        style: const TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                       );
                     }
                   },

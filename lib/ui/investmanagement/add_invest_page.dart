@@ -8,9 +8,7 @@ class AddInvestPage extends StatefulWidget {
   final Function addInvestCallback;
   static const String PAGE_ROUTE_NAME = "/add_invest";
 
-  const AddInvestPage(
-      {Key? key, required this.itemCoin, required this.addInvestCallback})
-      : super(key: key);
+  const AddInvestPage({Key? key, required this.itemCoin, required this.addInvestCallback}) : super(key: key);
 
   @override
   _AddInvestPageState createState() => _AddInvestPageState();
@@ -36,8 +34,7 @@ class _AddInvestPageState extends State<AddInvestPage> {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(widget.itemCoin.name,
-                    textDirection: TextDirection.ltr,
-                    style: const TextStyle(color: Colors.black)),
+                    textDirection: TextDirection.ltr, style: const TextStyle(color: Colors.black)),
               ),
             ],
           ),
@@ -52,9 +49,7 @@ class _AddInvestPageState extends State<AddInvestPage> {
           )),
       body: Column(
         children: [
-          Padding(
-              padding: const EdgeInsets.only(top: 100, left: 30),
-              child: amountOfCurrency()),
+          Padding(padding: const EdgeInsets.only(top: 100, left: 30), child: amountOfCurrency()),
           GestureDetector(
             child: Column(
               children: [
@@ -104,10 +99,7 @@ class _AddInvestPageState extends State<AddInvestPage> {
                 disabledBorder: InputBorder.none,
                 hintText: "0.0",
                 hintStyle: TextStyle(color: Color(AppColors.colorSilver))),
-            style: const TextStyle(
-                fontSize: 100,
-                fontWeight: FontWeight.bold,
-                color: Color(AppColors.colorSilver)),
+            style: const TextStyle(fontSize: 100, fontWeight: FontWeight.bold, color: Color(AppColors.colorSilver)),
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
             onChanged: (text) {
@@ -149,8 +141,8 @@ class _AddInvestPageState extends State<AddInvestPage> {
       ),
       onTap: () {
         ItemCoin itemCoin = widget.itemCoin;
-        Invest invest = Invest(itemCoin.id, itemCoin.name, itemCoin.symbol,
-            itemCoin.image, itemCoin.curerentPrice, amount);
+        Invest invest = Invest(itemCoin.id, itemCoin.name, itemCoin.symbol, itemCoin.image, itemCoin.curerentPrice,
+            amount, itemCoin.marketCap, itemCoin.rank, itemCoin.changePercent);
         widget.addInvestCallback(invest);
         Navigator.of(context).pop(true);
       },

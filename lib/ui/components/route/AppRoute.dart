@@ -13,16 +13,14 @@ Route appRoutes(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => ConvertCoinPage(coins: coins));
     case CoinDetailsScreen.PAGE_ROUTE_NAME:
       ItemCoin itemCoin = settings.arguments as ItemCoin;
-      return MaterialPageRoute(
-          builder: (_) => CoinDetailsScreen(coin: itemCoin));
+      return MaterialPageRoute(builder: (_) => CoinDetailsScreen(coin: itemCoin));
     case FollowingCoinsScreen.PAGE_ROUTE_NAME:
       return MaterialPageRoute(builder: (_) => const FollowingCoinsScreen());
     case AddInvestPage.PAGE_ROUTE_NAME:
-      ItemCoin itemCoin = settings.arguments as ItemCoin;
-      Function addInvestCallback = settings.arguments as Function;
-      return MaterialPageRoute(
-          builder: (_) => AddInvestPage(
-              itemCoin: itemCoin, addInvestCallback: addInvestCallback));
+      List<Object> arguments = settings.arguments as List<Object>;
+      ItemCoin itemCoin = arguments.first as ItemCoin;
+      Function addInvestCallback = arguments[1] as Function;
+      return MaterialPageRoute(builder: (_) => AddInvestPage(itemCoin: itemCoin, addInvestCallback: addInvestCallback));
     default:
       return MaterialPageRoute(builder: (_) => const HomePage());
   }

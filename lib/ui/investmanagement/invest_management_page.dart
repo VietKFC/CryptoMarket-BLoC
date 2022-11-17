@@ -15,6 +15,8 @@ import 'package:vn_crypto/ui/investmanagement/add_invest_page.dart';
 import 'package:vn_crypto/ui/investmanagement/select_invest_dialog.dart';
 import 'package:vn_crypto/ultils/Constant.dart';
 
+import '../screen/CoinDetailsScreen.dart';
+
 class InvestManagementScreen extends StatefulWidget {
   const InvestManagementScreen({Key? key}) : super(key: key);
 
@@ -40,9 +42,8 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
   InvestManagementBloc? investManagementBloc;
 
   void initBloc() async {
-    investManagementBloc =
-        InvestManagementBloc(investRepository: getIt.get<InvestRepository>())
-          ..add(InvestManagementLoaded());
+    investManagementBloc = InvestManagementBloc(investRepository: getIt.get<InvestRepository>())
+      ..add(InvestManagementLoaded());
   }
 
   @override
@@ -77,17 +78,13 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
                   padding: const EdgeInsets.only(left: 16, top: 4),
                   child: Text(
                     currencyFormatter.format(currentBalance),
-                    style: const TextStyle(
-                        fontSize: 28, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                   ),
                 ),
                 balanceChange24h(),
                 Padding(
                   padding: const EdgeInsets.only(left: 16, right: 16, top: 28),
-                  child: SizedBox(
-                      height: 72,
-                      width: double.infinity,
-                      child: totalProfitView()),
+                  child: SizedBox(height: 72, width: double.infinity, child: totalProfitView()),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(left: 16, top: 40),
@@ -135,9 +132,7 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
                     }
                   },
                 ),
-                Padding(
-                    padding: const EdgeInsets.only(left: 16, right: 16),
-                    child: addNewButton()),
+                Padding(padding: const EdgeInsets.only(left: 16, right: 16), child: addNewButton()),
               ],
             ),
           ),
@@ -151,8 +146,7 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
     originalPrices = [];
   }
 
-  void getInfoOfInvest(
-      double price, double originalPrice, double priceChange24h) {
+  void getInfoOfInvest(double price, double originalPrice, double priceChange24h) {
     if (countInvest < investAmount) {
       countInvest++;
       currentBalance += price;
@@ -164,12 +158,9 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
           totalProfitLoss = currentBalance - originalBalance;
           totalProfitLossPercent = totalProfitLoss / originalBalance;
           for (int i = 0; i < countInvest; i++) {
-            balanceChange24hPercent +=
-                priceChangePercents[i] * (originalPrices[i] / originalBalance);
+            balanceChange24hPercent += priceChangePercents[i] * (originalPrices[i] / originalBalance);
           }
-          colorPriceChange = balanceChange24hPercent >= 0
-              ? AppColors.colorMountainMeadow
-              : AppColors.colorAmaranth;
+          colorPriceChange = balanceChange24hPercent >= 0 ? AppColors.colorMountainMeadow : AppColors.colorAmaranth;
           if (!isResetState) {
             setState(() {
               isResetState = true;
@@ -202,10 +193,16 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
           itemCount: investAmount,
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
-            return InvestItem(
-              invest: invests[index],
-              index: index + 1,
-              callback: getInfoOfInvest,
+            return InkWell(
+              child: InvestItem(
+                invest: invests[index],
+                index: index + 1,
+                callback: getInfoOfInvest,
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, CoinDetailsScreen.PAGE_ROUTE_NAME,
+                    arguments: ItemCoin.fromInvestItem(invests[index]));
+              },
             );
           }),
     );
@@ -218,9 +215,8 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
           width: double.infinity,
           height: double.infinity,
           child: DecoratedBox(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(AppColors.colorWildSand))),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(10), color: const Color(AppColors.colorWildSand))),
         ),
         Align(
           alignment: Alignment.centerLeft,
@@ -231,8 +227,7 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
                   AppStrings.totalProfitLoss,
-                  style: TextStyle(
-                      color: Colors.black.withOpacity(0.75), fontSize: 14),
+                  style: TextStyle(color: Colors.black.withOpacity(0.75), fontSize: 14),
                 ),
               ),
               Padding(
@@ -241,10 +236,7 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
                   totalProfitLoss >= 0
                       ? "+${currencyFormatter.format(totalProfitLoss)}"
                       : currencyFormatter.format(totalProfitLoss),
-                  style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
               )
             ],
@@ -254,9 +246,7 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
             bottom: 4,
             right: 14,
             child: Row(
-              children: [
-                PriceChange(priceChangeRate: totalProfitLossPercent * 100)
-              ],
+              children: [PriceChange(priceChangeRate: totalProfitLossPercent * 100)],
             ))
       ],
     );
@@ -286,8 +276,7 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
             context: context,
             builder: (BuildContext context) {
               return Dialog(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   child: SelectInvestDialog(callback: onSelectedInvest));
             });
       },
@@ -295,8 +284,7 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
   }
 
   void onSelectedInvest(ItemCoin itemCoin) {
-    Navigator.pushNamed(context, AddInvestPage.PAGE_ROUTE_NAME,
-        arguments: [itemCoin, onAddNewInvest]);
+    Navigator.pushNamed(context, AddInvestPage.PAGE_ROUTE_NAME, arguments: [itemCoin, onAddNewInvest]);
   }
 
   void onAddNewInvest(Invest invest) {
@@ -306,16 +294,18 @@ class _InvestManagementScreenState extends State<InvestManagementScreen> {
       for (Invest investItem in invests) {
         if (investItem.id == invest.id) {
           double newAmount = investItem.amount + invest.amount;
-          double averagePrice = (investItem.amount * investItem.currentPrice +
-                  invest.amount * invest.currentPrice) /
-              newAmount;
+          double averagePrice =
+              (investItem.amount * investItem.currentPrice + invest.amount * invest.currentPrice) / newAmount;
           investManagementBloc?.add(InvestManagementUpdateCoin(Invest(
               investItem.id,
               investItem.name,
               investItem.symbol,
               investItem.image,
               averagePrice,
-              newAmount)));
+              newAmount,
+              investItem.marketCap,
+              investItem.rank,
+              investItem.changePercent)));
           isExist = true;
           break;
         }

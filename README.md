@@ -18,3 +18,5 @@ GetIt
 SqfLite
 
 Route
+
+Native platform intergration

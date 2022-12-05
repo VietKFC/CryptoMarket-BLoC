@@ -23,11 +23,12 @@ class DatabaseProvider {
   _initDatabase() async {
     return await openDatabase(
       join(await getDatabasesPath(), DB_NAME),
-      version: 1,
+      version: 2,
       onCreate: (db, version) {
         db.execute("""CREATE TABLE $FOLLOWING_TABLE (
             id String PRIMARY KEY,
-            image TEXT
+            image TEXT,
+            isNew INTEGER
         )""");
         db.execute("""CREATE TABLE $INVEST_TABLE (
             id String PRIMARY KEY,
@@ -40,6 +41,9 @@ class DatabaseProvider {
             market_cap_rank INTEGER,
             price_change_percentage_24h REAL
       )""");
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        await db.execute("ALTER TABLE $FOLLOWING_TABLE ADD isNew INTEGER");
       },
     );
   }

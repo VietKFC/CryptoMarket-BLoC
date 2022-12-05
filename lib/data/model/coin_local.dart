@@ -10,17 +10,16 @@ class CoinLocal {
   final String coinId;
   @JsonKey(name: "image")
   final String image;
+  @JsonKey(name: "isNew")
+  final int isNew = 1;
 
   CoinLocal(this.coinId, this.image);
 
-  factory CoinLocal.fromItemCoin(ItemCoin coin) =>
-      CoinLocal(coin.id, coin.image);
+  factory CoinLocal.fromItemCoin(ItemCoin coin) => CoinLocal(coin.id, coin.image);
 
-  factory CoinLocal.fromCoinDetails(CoinDetails coin) =>
-      CoinLocal(coin.id, coin.image.large);
+  factory CoinLocal.fromCoinDetails(CoinDetails coin) => CoinLocal(coin.id, coin.image.large);
 
-  factory CoinLocal.fromJson(Map<String, dynamic> json) =>
-      _$CoinLocalFromJson(json);
+  factory CoinLocal.fromJson(Map<String, dynamic> json) => _$CoinLocalFromJson(json);
 
   Map<String, dynamic> toJson() => _$CoinLocalToJson(this);
 }

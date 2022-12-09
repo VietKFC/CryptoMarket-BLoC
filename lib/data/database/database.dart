@@ -43,7 +43,9 @@ class DatabaseProvider {
       )""");
       },
       onUpgrade: (db, oldVersion, newVersion) async {
-        await db.execute("ALTER TABLE $FOLLOWING_TABLE ADD isNew INTEGER");
+        if (oldVersion < 2 && newVersion > 2) {
+          await db.execute("ALTER TABLE $FOLLOWING_TABLE ADD isNew INTEGER");
+        }
       },
     );
   }

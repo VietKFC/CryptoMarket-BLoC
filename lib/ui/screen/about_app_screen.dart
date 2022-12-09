@@ -6,6 +6,8 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/link.dart';
 import 'package:vn_crypto/bloc/theme/theme_bloc.dart';
 import 'package:vn_crypto/bloc/theme/theme_event.dart';
+import 'package:vn_crypto/ui/components/common/title_with_arrow.dart';
+import 'package:vn_crypto/ui/components/profile/profile_screen.dart';
 import 'package:vn_crypto/ultils/Constant.dart';
 
 class AboutAppScreen extends StatefulWidget {
@@ -37,30 +39,42 @@ class _AboutAppScreenState extends State<AboutAppScreen> {
     return Scaffold(
       appBar: AppBar(
           title: const Text(AppStrings.titleAboutApp,
-              textDirection: TextDirection.ltr,
-              style: TextStyle(color: Colors.black))),
+              textDirection: TextDirection.ltr, style: TextStyle(color: Colors.black))),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, top: 32, right: 16),
         child: Card(
           elevation: 6,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              TitleWithArrow(
+                onPressed: navigateToProfile,
+                title: AppStrings.profile,
+                colorArrow: AppColors.bluePrimary,
+              ),
+              Container(height: 1, color: Colors.grey[200]),
               Link(
                   uri: Uri.parse(AppStrings.textLinkPolicy),
-                  builder: (_, link) => titleWithArrow(
-                      title: AppStrings.textPolicy, onPressed: link)),
+                  builder: (_, link) => TitleWithArrow(
+                        onPressed: link,
+                        title: AppStrings.textPolicy,
+                        colorArrow: AppColors.bluePrimary,
+                      )),
               Container(height: 1, color: Colors.grey[200]),
               Link(
                   uri: Uri.parse(AppStrings.textLinkFAQ),
-                  builder: (_, link) => titleWithArrow(
-                      title: AppStrings.textFAQ, onPressed: link)),
+                  builder: (_, link) => TitleWithArrow(
+                        onPressed: link,
+                        title: AppStrings.textFAQ,
+                        colorArrow: AppColors.bluePrimary,
+                      )),
               Container(height: 1, color: Colors.grey[200]),
-              titleWithArrow(
-                  title: AppStrings.textShareApp,
-                  onPressed: () => Share.share("VnCrypto")),
+              TitleWithArrow(
+                onPressed: () => Share.share("VnCrypto"),
+                title: AppStrings.textShareApp,
+                colorArrow: AppColors.bluePrimary,
+              ),
               Container(height: 1, color: Colors.grey[200]),
               changeTheme()
             ],
@@ -70,17 +84,8 @@ class _AboutAppScreenState extends State<AboutAppScreen> {
     );
   }
 
-  Widget titleWithArrow({required String title, required onPressed}) {
-    return MaterialButton(
-      onPressed: onPressed,
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          Expanded(child: Text(title, style: const TextStyle(fontSize: 14))),
-          const Icon(Icons.arrow_forward_ios, size: 16)
-        ],
-      ),
-    );
+  void navigateToProfile() {
+    Navigator.pushNamed(context, ProfileScreen.PAGE_ROUTE_NAME);
   }
 
   Widget changeTheme() {
@@ -88,25 +93,20 @@ class _AboutAppScreenState extends State<AboutAppScreen> {
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
-          const Expanded(
-              child:
-                  Text(AppStrings.textTheme, style: TextStyle(fontSize: 14))),
+          const Expanded(child: Text(AppStrings.textTheme, style: TextStyle(fontSize: 14))),
           AdvancedSwitch(
-            width: 48,
-            height: 24,
-            controller: _controller,
-            activeColor: Colors.black12,
-            inactiveColor: Colors.black12,
-            thumb: ValueListenableBuilder<bool>(
-                valueListenable: _controller,
-                builder: (context, value, child)  {
-              final themeBloc = BlocProvider.of<ThemeBloc>(context);
-              themeBloc.add(ChangeTheme(isDarkTheme));
-                  return thumbSwitch(
-                    iconData:
-                        isDarkTheme ? Icons.nights_stay : Icons.wb_sunny);
-                })
-          )
+              width: 48,
+              height: 24,
+              controller: _controller,
+              activeColor: Colors.black12,
+              inactiveColor: Colors.black12,
+              thumb: ValueListenableBuilder<bool>(
+                  valueListenable: _controller,
+                  builder: (context, value, child) {
+                    final themeBloc = BlocProvider.of<ThemeBloc>(context);
+                    themeBloc.add(ChangeTheme(isDarkTheme));
+                    return thumbSwitch(iconData: isDarkTheme ? Icons.nights_stay : Icons.wb_sunny);
+                  }))
         ],
       ),
     );

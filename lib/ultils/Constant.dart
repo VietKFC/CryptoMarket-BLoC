@@ -48,6 +48,7 @@ class AppStrings {
   static const String textFAQ = "FAQ";
   static const String textShareApp = "ShareApp";
   static const String textTheme = "Theme";
+  static const String profile = "Profile";
 
   static const String textLinkPolicy = "https://coinmarketcap.com/privacy/";
   static const String textLinkFAQ = "https://www.coingecko.com/en/faq";
@@ -80,9 +81,15 @@ class AppColors {
 
   static const Color colorMystic = Color.fromRGBO(224, 227, 237, 1);
   static const Color colorConcrete = Color.fromRGBO(242, 242, 242, 1);
+  static const Color bluePrimary = Color.fromRGBO(72, 145, 255, 1);
   static const int colorDodgerBlue = 0xFF4891FF;
 }
 
 class Constant {
   static const int defaultDays = 365;
+}
+
+class MethodChannelConstant {
+  static const String documentChannel = "flutter/plugins/open_document";
+  static const String receivePathChannel = "flutter/plugins/path_image";
 }

@@ -1,9 +1,11 @@
+import 'package:injectable/injectable.dart';
 import 'package:vn_crypto/data/database/database.dart';
 import 'package:vn_crypto/data/model/invest.dart';
 import 'package:vn_crypto/data/model/item_coin.dart';
 import 'package:vn_crypto/data/service/api.dart';
 import 'package:vn_crypto/di/dependency_injection.dart';
 
+@lazySingleton
 class InvestRepository {
   DatabaseProvider databaseProvider = getIt.get<DatabaseProvider>();
   final Api api;

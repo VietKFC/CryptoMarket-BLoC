@@ -9,7 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.embedding.engine.plugins.PluginRegistry
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
 
@@ -38,7 +40,6 @@ class DocumentManagementFragment : Fragment(),
                 receivePathMethodChannel?.invokeMethod(
                     RECEIVE_PATH_CHANNEL_KEY, uri.path
                 )
-                uri.path?.let { it1 -> Log.e("viet", it1) }
                 activity?.finish()
             }
         }
@@ -46,16 +47,30 @@ class DocumentManagementFragment : Fragment(),
     private fun setUpMethodChannel(
         binaryMessenger: BinaryMessenger
     ) {
-        Log.e("viet", "setUpMethodChannel: " )
+        Log.e("viet", "setUpMethodChannel: ")
         receivePathMethodChannel = MethodChannel(
             binaryMessenger,
             RECEIVE_PATH_CHANNEL_KEY
         )
+        receivePathMethodChannel?.setMethodCallHandler { call, result ->
+            when (call.method) {
+                RECEIVE_PATH_CHANNEL_KEY -> result.notImplemented()
+            }
+        }
     }
 
     private fun clearMethodChannel() {
         receivePathMethodChannel?.setMethodCallHandler(null)
         receivePathMethodChannel = null
+    }
+
+    override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+        Log.e("viet", "onAttachedToEngine: ")
+        setUpMethodChannel(binding.binaryMessenger)
+    }
+
+    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+        clearMethodChannel()
     }
 
     override fun onCreateView(
@@ -82,13 +97,5 @@ class DocumentManagementFragment : Fragment(),
         private const val MIME_IMAGE = "image/*"
         private const val RECEIVE_PATH_CHANNEL_KEY =
             "flutter/plugins/path_image"
-    }
-
-    override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        setUpMethodChannel(binding.binaryMessenger)
-    }
-
-    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        clearMethodChannel()
     }
 }

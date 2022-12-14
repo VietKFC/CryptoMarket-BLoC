@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:interactive_chart/interactive_chart.dart';
 import 'package:vn_crypto/data/model/coin_detail.dart';
 import 'package:vn_crypto/data/model/global.dart';
@@ -5,6 +6,7 @@ import 'package:vn_crypto/data/model/item_coin.dart';
 import 'package:vn_crypto/data/model/item_trending_coin.dart';
 import 'package:vn_crypto/data/service/api.dart';
 
+@lazySingleton
 class CoinRepository {
   final Api api;
 

@@ -1,7 +1,9 @@
+import 'package:injectable/injectable.dart';
 import 'package:vn_crypto/data/database/database.dart';
 import 'package:vn_crypto/data/model/coin_local.dart';
 import 'package:vn_crypto/di/dependency_injection.dart';
 
+@lazySingleton
 class FollowRepository {
   DatabaseProvider databaseProvider = getIt<DatabaseProvider>();
 

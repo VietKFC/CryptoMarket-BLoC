@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:vn_crypto/data/model/coin_local.dart';
@@ -7,6 +8,7 @@ const String DB_NAME = "vncrypto_db";
 const String FOLLOWING_TABLE = "following";
 const String INVEST_TABLE = "invest";
 
+@lazySingleton
 class DatabaseProvider {
   static final DatabaseProvider databaseProvider = DatabaseProvider.init();
   Database? _database;

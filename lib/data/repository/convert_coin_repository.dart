@@ -1,5 +1,7 @@
+import 'package:injectable/injectable.dart';
 import 'package:vn_crypto/data/service/api_service.dart';
 
+@lazySingleton
 class ConvertCoinRepository {
   final Api api;
 

@@ -26,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    receiveImageChannel.setMethodCallHandler((call) => receiveImagePath(call));
+    receiveImageChannel.setMethodCallHandler(receiveImagePath);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -124,8 +124,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> receiveImagePath(MethodCall call) async {
+    print("path file: ${call.method}");
     if (call.method != MethodChannelConstant.receivePathChannel) return;
     var filePath = call.arguments.toString();
-    print("path file: $filePath");
   }
 }

@@ -1,8 +1,9 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import 'package:vn_crypto/di/dependency_injection.config.dart';
+
+import 'dependency_injection.config.dart';
 
 final getIt = GetIt.instance;
 
 @InjectableInit()
-void configureDependencies() => $initGetIt(getIt);
+Future<void> configureDependencies() async => getIt.init();

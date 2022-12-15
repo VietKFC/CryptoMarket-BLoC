@@ -13,30 +13,28 @@ import 'package:vn_crypto/data/service/url.dart';
 
 @lazySingleton
 class Api {
-  Api({
-    Dio? dio,
-  }) : dio = dio ?? Dio() {
-    this.dio
+  final Dio _dio = Dio();
+
+  Api() {
+    _dio
       ..interceptors.add(LoggingInterceptor())
       ..options.baseUrl = Url.BASE_URL
       ..options.connectTimeout = Url.CONNECTION_TIMEOUT
       ..options.responseType = ResponseType.json;
   }
 
-  final Dio dio;
-
   Future<List<ItemCoin>> getCoins(String currency) async {
-    final response = await dio.get(Url.GET_COINS_URL, queryParameters: {'vs_currency': currency});
+    final response = await _dio.get(Url.GET_COINS_URL, queryParameters: {'vs_currency': currency});
     List<ItemCoin> itemCoins = [];
-    List<dynamic> itemCoinsReponse = response.data as List;
-    for (int i = 0; i < itemCoinsReponse.length; i++) {
-      itemCoins.add(ItemCoin.fromJson(itemCoinsReponse[i]));
+    List<dynamic> itemCoinsResponse = response.data as List;
+    for (int i = 0; i < itemCoinsResponse.length; i++) {
+      itemCoins.add(ItemCoin.fromJson(itemCoinsResponse[i]));
     }
     return itemCoins;
   }
 
   Future<List<ItemTrendingCoin>> getTrendingCoins() async {
-    final response = await dio.get(Url.GET_TRENDING_URL);
+    final response = await _dio.get(Url.GET_TRENDING_URL);
     CoinResponse coinResponse = CoinResponse.fromJson(response.data);
     List<ItemCoinResponse> coinResponses = coinResponse.coinResponses;
     List<ItemTrendingCoin> trendingCoins = [];
@@ -47,7 +45,7 @@ class Api {
   }
 
   Future<List<Category>> getCategories() async {
-    final response = await dio.get(Url.GET_CATEGORIES);
+    final response = await _dio.get(Url.GET_CATEGORIES);
     List<Category> categories = [];
     List<dynamic> categoryResponses = response.data as List;
     for (int i = 0; i < categoryResponses.length; i++) {
@@ -57,18 +55,18 @@ class Api {
   }
 
   Future<Global> getGlobalInfo() async {
-    final response = await dio.get(Url.GET_GLOBAL_INFO);
+    final response = await _dio.get(Url.GET_GLOBAL_INFO);
     Global global = Global.fromJson(response.data['data']);
     return global;
   }
 
   Future<CoinDetails> getCoin(String coinId) async {
-    final response = await dio.get('${Url.GET_COIN_DETAILS_URL}/$coinId');
+    final response = await _dio.get('${Url.GET_COIN_DETAILS_URL}/$coinId');
     return CoinDetails.fromJson(response.data);
   }
 
   Future<List<CandleData>> getCoinOhlc(String coinId, String currency, int days) async {
-    final response = await dio
+    final response = await _dio
         .get('${Url.GET_COIN_DETAILS_URL}/$coinId/ohlc', queryParameters: {'vs_currency': currency, 'days': days});
     List<CandleData> candleDatas = [];
     List<dynamic> ohlcReponse = response.data as List;
@@ -80,7 +78,7 @@ class Api {
   }
 
   Future<List<String>> getSupportedCurrencies() async {
-    final response = await dio.get(Url.GET_SUPPORTED_CURRENCIES);
+    final response = await _dio.get(Url.GET_SUPPORTED_CURRENCIES);
     List<String> currencies = [];
     List<dynamic> currencyResponses = response.data as List;
     for (int i = 0; i < currencyResponses.length; i++) {
@@ -90,7 +88,7 @@ class Api {
   }
 
   Future<double> getPriceConverted(String id, String currency) async {
-    final response = await dio.get(Url.CONVERT_PRICE, queryParameters: {'ids': id, 'vs_currencies': currency});
+    final response = await _dio.get(Url.CONVERT_PRICE, queryParameters: {'ids': id, 'vs_currencies': currency});
     return response.data[id][currency] as double;
   }
 }

@@ -1,6 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vn_crypto/bloc/profile/profile_bloc.dart';
+import 'package:vn_crypto/bloc/profile/profile_event.dart';
+import 'package:vn_crypto/bloc/profile/profile_state.dart';
 import 'package:vn_crypto/ui/components/common/title_with_arrow.dart';
 import 'package:vn_crypto/ultils/Constant.dart';
 
@@ -22,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   ];
   final MethodChannel documentChannel = const MethodChannel(MethodChannelConstant.documentChannel);
   final MethodChannel receiveImageChannel = const MethodChannel(MethodChannelConstant.receivePathChannel);
-  String _pathAvatar = "";
+  final ProfileBloc profileBloc = ProfileBloc(ProfileInitialized());
 
   @override
   Widget build(BuildContext context) {
@@ -98,24 +102,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       decoration: BoxDecoration(border: Border.all(color: AppColors.bluePrimary, width: 3), shape: BoxShape.circle),
       child: GestureDetector(
-        onTap: onOpenDocument,
-        child: CircleAvatar(
-          radius: 56,
-          backgroundColor: Colors.white,
-          child: ClipOval(
-            child: SizedBox.fromSize(
-              size: const Size.fromRadius(52),
-              child: CachedNetworkImage(
-                imageUrl: url,
-                fit: BoxFit.cover,
-                progressIndicatorBuilder: (context, url, progress) => const CircularProgressIndicator(
-                  color: AppColors.bluePrimary,
-                ),
+          onTap: onOpenDocument,
+          child: CircleAvatar(
+            radius: 56,
+            backgroundColor: Colors.white,
+            child: ClipOval(
+              child: SizedBox.fromSize(
+                size: const Size.fromRadius(52),
+                child: BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
+                  if (state is ProfilePickImageSuccess && state.pathImage.toString().isNotEmpty) {
+                    return Image.asset(
+                      ImageAssetString.logoAsset,
+                      fit: BoxFit.cover,
+                    );
+                  } else {
+                    return CachedNetworkImage(
+                      imageUrl: url,
+                      fit: BoxFit.cover,
+                      progressIndicatorBuilder: (context, url, progress) => const CircularProgressIndicator(
+                        color: AppColors.bluePrimary,
+                      ),
+                    );
+                  }
+                }),
               ),
             ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 
@@ -124,8 +136,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> receiveImagePath(MethodCall call) async {
-    print("path file: ${call.method}");
     if (call.method != MethodChannelConstant.receivePathChannel) return;
-    var filePath = call.arguments.toString();
+    final filePath = call.arguments.toString();
+    profileBloc.add(ProfileGetImageUri(filePath));
   }
 }

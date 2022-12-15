@@ -11,7 +11,7 @@ import 'package:vn_crypto/ui/screen/ListCoinScreen.dart';
 import 'package:vn_crypto/ui/screen/about_app_screen.dart';
 
 void main() async {
-  configureDependencies();
+  await configureDependencies();
   runApp(const MyApp());
 }
 

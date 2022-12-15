@@ -10,16 +10,11 @@ const String INVEST_TABLE = "invest";
 
 @lazySingleton
 class DatabaseProvider {
-  static final DatabaseProvider databaseProvider = DatabaseProvider.init();
-  Database? _database;
-
-  DatabaseProvider.init();
+  late Database _database;
 
   Future<Database> get database async {
-    if (_database != null) return _database!;
-
     _database = await _initDatabase();
-    return _database!;
+    return _database;
   }
 
   _initDatabase() async {

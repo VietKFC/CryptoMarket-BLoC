@@ -3,6 +3,7 @@ package com.example.vn_crypto
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,7 @@ class DocumentManagementFragment : Fragment() {
     private val addFileLauncher =
         registerForActivityResult(addFileContract) { uri ->
             uri?.let {
+                Log.e("viet", "launcher: " + uri.host)
                 MainActivity.uriReceiverChannel?.invokeMethod(
                     RECEIVE_PATH_CHANNEL_KEY, uri.path
                 )

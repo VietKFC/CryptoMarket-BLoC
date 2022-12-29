@@ -5,7 +5,7 @@ import 'package:vn_crypto/bloc/profile/profile_state.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc(ProfileState initialState) : super(ProfileInitialized()) {
     on<ProfileGetImageUri>((event, emit) async {
-      emit(event.pathFile);
+      emit(ProfilePickImageSuccess(event.pathFile));
     });
   }
 }

@@ -27,6 +27,14 @@ Native platform intergration
  height="320" width="169" />
     <img src="https://github.com/VietKFC/CryptoMarket-BLoC/assets/53604984/75ec72c3-7096-4b04-9281-99b3964e0eb3"
  height="320" width="169" />
+    <img src="https://github.com/VietKFC/CryptoMarket-BLoC/assets/53604984/2400c277-3937-45df-a93b-9c63f98c600e"
+ height="320" width="169" />
+    <img src="https://github.com/VietKFC/CryptoMarket-BLoC/assets/53604984/63de7620-43e2-48f3-88e0-82bee0dcdb8b"
+ height="320" width="169" />
+    <img src="https://github.com/VietKFC/CryptoMarket-BLoC/assets/53604984/30b8cb1c-1b9f-4c72-88be-a985f4f8fe2e"
+ height="320" width="169" />
+    <img src="https://github.com/VietKFC/CryptoMarket-BLoC/assets/53604984/80a8b323-c2e2-48a4-a095-679eaa6b0ac8"
+ height="320" width="169" />
   </p>
 </p>
 

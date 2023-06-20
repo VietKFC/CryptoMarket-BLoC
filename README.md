@@ -1,3 +1,4 @@
+![logo](https://github.com/VietKFC/CryptoMarket-BLoC/assets/53604984/4a209569-f39b-405a-800c-3446bc8fbe9a)
 # VNCrypto
 Made by VietNH
 

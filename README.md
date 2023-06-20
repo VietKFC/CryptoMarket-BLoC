@@ -5,12 +5,13 @@ Made by VietNH
 Technologies:
 
 BLoC 8.0.0
-Provider
-Json serializable
-interactive_chart
-GetIt
-SqfLite
-Route
+
+Provider<br />
+Json serializable<br />
+interactive_chart<br />
+GetIt<br />
+SqfLite<br />
+Route<br />
 Native platform intergration
 
 <p>

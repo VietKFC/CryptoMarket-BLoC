@@ -23,7 +23,8 @@ Native platform intergration
 
 <p>
   <p align="left">
-    <img src="![IMG_6875](https://github.com/VietKFC/CryptoMarket-BLoC/assets/53604984/297018d2-7d5b-4e18-aaaf-e01bb2c8ad9a)" height="220" width="210" />
+    <img src=![IMG_6875](https://github.com/VietKFC/CryptoMarket-BLoC/assets/53604984/993313d5-774e-447e-81c2-0c4894b7178e)
+ height="220" width="210" />
   </p>
 </p>
 

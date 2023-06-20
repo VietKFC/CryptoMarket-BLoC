@@ -4,8 +4,7 @@ Made by VietNH
 
 Technologies:
 
-BLoC 8.0.0
-
+BLoC 8.0.0<br />
 Provider<br />
 Json serializable<br />
 interactive_chart<br />
